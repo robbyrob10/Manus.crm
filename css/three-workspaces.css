@@ -169,8 +169,8 @@
 
 /* Dialer idle row: wider console, reduced height, and every primary control on one line. */
 #dialer.dialer {
-  width: min(540px, calc(100vw - 24px));
-  max-width: min(540px, calc(100vw - 24px));
+  width: min(440px, calc(100vw - 24px));
+  max-width: min(440px, calc(100vw - 24px));
   padding: 6px 8px;
 }
 #dialer .dialer-main {
@@ -187,13 +187,28 @@
 #dialer .dialer-timer { font-size: 10px; }
 #dialer .dial-keypad { width: 32px; height: 32px; flex: 0 0 32px; }
 #dialer .dialer-input {
-  width: 100px !important;
-  min-width: 100px;
-  max-width: 100px;
+  width: 142px !important;
+  min-width: 142px;
+  max-width: 142px;
   height: 32px;
-  padding: 0 6px;
-  font-size: 12px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 2px;
+  outline: none;
+  background: #020803;
+  color: #39FF14;
+  -webkit-text-fill-color: #39FF14;
+  font-family: "Courier New", monospace;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  line-height: 1;
+  text-shadow: 0 0 3px rgba(57,255,20,.9), 0 0 8px rgba(57,255,20,.35);
+  text-align: center;
+  caret-color: #39FF14;
 }
+#dialer .dialer-input:focus { border: 0; outline: none; background: #020803; }
+#dialer .dialer-input::placeholder { color: #1A8D20; text-shadow: none; }
 #dialer .dial-action { flex: 0 0 38px; min-width: 38px; gap: 1px; }
 #dialer .dial-circle { width: 32px; height: 32px; }
 #dialer .dial-action-label { font-size: 8px; line-height: 1; }
