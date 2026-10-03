@@ -27,7 +27,8 @@
   border-bottom: 1px solid var(--work-divider);
 }
 #leadsPage .panel-title { color: var(--work-ink); font-size: 13px; font-weight: 650; letter-spacing: -.01em; }
-#leadsPage .panel-count { padding: 3px 7px; border: 1px solid #E1E6EF; border-radius: 5px; background: #F7F8FC; color: #697587; font-size: 11px; }
+#leadsPage .panel-count { padding: 0; border: 0; border-radius: 0; background: transparent; color: #8993A3; font-size: 10px; font-weight: 500; }
+#leadsPage #leadOptions { display: none; }
 #leadsPage .icon-btn { width: 32px; height: 32px; border-radius: 8px; color: #788397; }
 #leadsPage .icon-btn:hover { background: #F1F4FA; color: #3D66B4; }
 #leadsPage .icon-btn:focus-visible,
@@ -92,7 +93,7 @@
 #leadsPage .detail-body .contact-fact .fact-val { min-width: 0; overflow-wrap: anywhere; }
 #leadsPage .detail-body .stmt th { color: #8490A0; font-size: 10px; }
 #leadsPage .detail-body .stmt td { border-top: 1px solid #EEF1F5; }
-#leadsPage .detail-body .financial-pitch-card { min-height: 74px; border-left: 3px solid #6D87CB; background: #F8FAFE; }
+#leadsPage .detail-body .financial-pitch-card { min-height: 74px; border-left: 0; background: #F8FAFE; }
 #leadsPage .financial-pitch-card .summary { margin: 0; line-height: 1.5; }
 #leadsPage .notes-section.section-card { min-height: 46px; padding: 9px 13px; }
 #leadsPage .notes-section .section-title { margin: 0; }
@@ -236,9 +237,12 @@
 .phone-ctl-pick { gap: 6px; padding: 0 9px 0 8px; border-left-color: #E4EAF3 !important; border-radius: 0 9px 9px 0; font-size: 11px !important; font-weight: 650 !important; }
 .phone-ctl-pick:hover { background: #F3F7FD; color: #315EA8; }
 .phone-ctl-icon { width: 20px; height: 20px; align-items: center; justify-content: center; border-radius: 6px; background: #EAF7EF; color: #168451; }
-.phone-ctl-icon .ic { width: 12px; height: 12px; }
+.phone-ctl-icon { background: #DDF6E6; color: #117A45; }
+.phone-ctl-icon .ic { width: 15px; height: 15px; }
 .phone-ctl-icon .dot { right: -2px; bottom: -2px; width: 6px; height: 6px; box-shadow: 0 0 0 2px #FFFFFF; }
 .phone-ctl-time { font-size: 10px; font-weight: 700; color: #168451; }
+#notifBtn { width: 40px; min-width: 40px; height: 40px; }
+#notifBtn > svg { width: 20px; height: 20px; stroke-width: 1.9; }
 
 /* Final page-level rhythm: 8px between major content surfaces. */
 #dashPage .db-head { display: none; }

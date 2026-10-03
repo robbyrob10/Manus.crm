@@ -353,7 +353,6 @@ function renderDetail() {
         </div>
       </div>
       ${b ? `<div class="section section-card financial-pitch-card">
-        <div class="section-title"><span>Financial outlook</span></div>
         <p class="summary">${esc(buildSummary(l))}</p>
       </div>` : ''}
       <div class="section section-card notes-section" id="notesSection">
