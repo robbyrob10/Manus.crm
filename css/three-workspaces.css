@@ -9,6 +9,12 @@
   --work-canvas: #E8EBF2;
 }
 
+@font-face {
+  font-family: "DSEG7 Classic";
+  src: url("../assets/dseg7-classic-latin-400-normal.woff2") format("woff2");
+  font-display: swap;
+}
+
 /* Leads: clear separation between pipeline, selected company, and live communications. */
 #leadsPage.workspace { background: var(--work-canvas); }
 #leadsPage .panel-leads,
@@ -197,16 +203,16 @@
   border-radius: 2px;
   outline: none;
   background: #020803;
-  color: #39FF14;
-  -webkit-text-fill-color: #39FF14;
-  font-family: "Courier New", monospace;
-  font-size: 19px;
-  font-weight: 900;
-  letter-spacing: .08em;
+  color: #7BE37A;
+  -webkit-text-fill-color: #7BE37A;
+  font-family: "DSEG7 Classic", monospace;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -.04em;
   line-height: 1;
-  text-shadow: 0 0 3px rgba(57,255,20,.9), 0 0 8px rgba(57,255,20,.35);
+  text-shadow: 0 0 3px rgba(123,227,122,.72), 0 0 7px rgba(123,227,122,.24);
   text-align: center;
-  caret-color: #39FF14;
+  caret-color: #7BE37A;
 }
 #dialer .dialer-input:focus { border: 0; outline: none; background: #020803; }
 #dialer .dialer-input::placeholder { color: #1A8D20; text-shadow: none; }
@@ -260,11 +266,14 @@
 
 /* Communications tab strip: keep the All/Messages/Calls/Email row compact. */
 #leadsPage .panel-comms > .comms-head {
-  height: 46px;
-  min-height: 46px;
+  height: 45px;
+  min-height: 45px;
   padding: 0 8px;
+  align-items: center;
 }
 #leadsPage .comms-head .comms-tabs {
+  display: flex;
+  align-items: center;
   gap: 3px;
   padding: 0;
 }
@@ -275,10 +284,11 @@
   font-size: 11px;
 }
 #leadsPage .panel-comms > .comms-head > .panel-tools .icon-btn {
-  width: 24px;
-  min-width: 24px;
-  height: 24px;
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
 }
+#leadsPage .panel-comms > .comms-head > .panel-tools { display: flex; align-items: center; height: 100%; }
 #leadsPage .panel-comms .ios-nav {
   height: 28px;
   min-height: 28px;
