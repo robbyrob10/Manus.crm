@@ -1,0 +1,13 @@
+/* Follow-up reminders: Coming up in Activity, the lead list clock and the Remind me window */
+.feed-group .link-btn { font-size: calc(.65625rem * var(--crm-font-scale, 1)); font-weight: 600; }
+.feed-main { flex: 1; min-width: 0; }
+.feed-sub.overdue { color: var(--accent-red); }
+.remind-done {
+  width: 1.5rem; height: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: .375rem; background: none; color: var(--text-muted); cursor: pointer; transition: background .12s, color .12s;
+}
+.remind-done:hover { background: var(--bg-row-hover); color: var(--accent-teal); }
+.lead-remind { display: inline-flex; vertical-align: middle; margin-right: .25rem; color: var(--text-muted); }
+.lead-remind.overdue { color: var(--accent-red); }
+.remind-body { display: grid; gap: .75rem; padding: 1rem 1.125rem; }
+.remind-picks { display: flex; flex-wrap: wrap; gap: .375rem; }

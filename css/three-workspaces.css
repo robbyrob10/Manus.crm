@@ -1,0 +1,342 @@
+/* Leads, dialer, and Scanner — coordinated financial-operations workspace */
+:root {
+  --work-ink: #4A5261;
+  --work-muted: #798496;
+  --work-line: #D9DFE9;
+  --work-divider: #EDF0F5;
+  --work-surface: #FFFFFF;
+  --work-soft: #F6F8FC;
+  --work-canvas: #E8EBF2;
+}
+
+/* Leads: clear separation between pipeline, selected company, and live communications. */
+#leadsPage.workspace { background: var(--work-canvas); }
+#leadsPage .panel-leads,
+#leadsPage .panel-comms {
+  background: var(--work-surface);
+  border: 1px solid var(--work-line);
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(25, 35, 58, .045);
+}
+#leadsPage .panel-leads > .panel-head,
+#leadsPage .panel-comms > .panel-head {
+  min-height: 46px;
+  height: 46px;
+  padding: 0 14px;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--work-divider);
+}
+#leadsPage .panel-title { color: var(--work-ink); font-size: 13px; font-weight: 650; letter-spacing: -.01em; }
+#leadsPage .panel-count { padding: 3px 7px; border: 1px solid #E1E6EF; border-radius: 5px; background: #F7F8FC; color: #697587; font-size: 11px; }
+#leadsPage .icon-btn { width: 32px; height: 32px; border-radius: 8px; color: #788397; }
+#leadsPage .icon-btn:hover { background: #F1F4FA; color: #3D66B4; }
+#leadsPage .icon-btn:focus-visible,
+#leadsPage .lead-options-trigger:focus-visible { outline: 2px solid #557BC9; outline-offset: 2px; }
+#leadsPage .panel-leads { overflow: hidden; }
+#leadsPage .lead-list {
+  flex: 0 1 43%; min-height: 155px; max-height: 48%; overflow: auto;
+  border-bottom: 1px solid var(--work-divider); scrollbar-width: thin; scrollbar-color: #C6CEDA transparent;
+}
+#leadsPage .lead-row {
+  min-height: 70px; padding: 11px 13px; column-gap: 10px; row-gap: 4px;
+  border-bottom: 1px solid #EFF2F6; transition: background .14s ease;
+}
+#leadsPage .lead-row:hover { background: #F8FAFD; }
+#leadsPage .lead-row.selected { background: #EAF0FF; box-shadow: none; }
+#leadsPage .lead-company { color: var(--work-ink); font-size: 12px; font-weight: 650; }
+#leadsPage .lead-revenue { color: #33435E; font-size: 12px; font-weight: 650; }
+#leadsPage .lead-contact { color: #707C8E; font-size: 11.5px; }
+#leadsPage .lead-ago { color: #8B95A4; font-size: 10.5px; }
+#leadsPage .track { margin-right: 3px; }
+#leadsPage .track.opened { color: #26825E; }
+
+/* Selected lead: one confident identity band, then aligned, equal-height information cards. */
+#leadsPage .panel-detail { min-width: 0; }
+#leadsPage .detail { gap: 8px; min-height: 0; }
+#leadsPage .detail-head {
+  min-height: 76px; margin: 0; padding: 8px; align-items: center;
+  border: 1px solid #D6DCE8; border-radius: 12px; background: #FFFFFF; color: #3A3F4B;
+}
+#leadsPage .detail-name { color: #3A3F4B; font-size: 15px; font-weight: 650; letter-spacing: -.02em; }
+#leadsPage .detail-sub { flex-wrap: wrap; color: #5A6078; font-size: 11px; }
+#leadsPage .detail-addr { color: #5A6078; }
+#leadsPage .detail-addr .ic, #leadsPage .detail-time { color: #8C93AB; }
+#leadsPage .detail-addr:hover { color: #3A3F4B; }
+#leadsPage .acts { gap: 7px; }
+#leadsPage .act-btn { width: 34px; min-width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 2px 5px rgba(0,0,0,.12); }
+#leadsPage .act-btn.call { background: #35C94A; }
+#leadsPage .act-btn.sms { background: #426FCE; }
+#leadsPage .act-btn.wa { background: #168A57; }
+#leadsPage .act-btn.email { background: #7464CC; }
+#leadsPage .detail-body { gap: 8px; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #C6CEDA transparent; }
+#leadsPage .info-pair, #leadsPage .section-pair { gap: 8px; align-items: stretch; }
+#leadsPage .section-card {
+  border: 1px solid #DDE3EC; border-radius: 12px; background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(25,35,58,.025); padding: 13px 14px;
+}
+#leadsPage .detail-body .section-card > .section-title {
+  width: fit-content; max-width: 100%; min-height: 0; margin: 0 0 9px; padding: 4px 8px;
+  border: 0; border-radius: 5px; background: #F2F4F8; color: #697587;
+  font-size: 10.5px; font-weight: 650; letter-spacing: .035em; line-height: 1.3;
+}
+#leadsPage .detail-body .section-card > .section-title .section-title-icon { width: 12px; height: 12px; color: #74829A; }
+#leadsPage .detail-body .fact-label { color: #8791A0; font-size: 10px; }
+#leadsPage .detail-body .fact-val,
+#leadsPage .detail-body .contact-value,
+#leadsPage .detail-body .stmt td:not(.as-of),
+#leadsPage .detail-body .summary,
+#leadsPage .detail-body .feed-text { color: #4A5261; font-size: 13px; font-weight: 500; }
+#leadsPage .detail-body .facts { gap: 9px 12px; }
+#leadsPage .detail-body .contact-facts { display: flex; flex-direction: column; gap: 6px; }
+#leadsPage .detail-body .contact-fact { display: grid; grid-template-columns: minmax(78px, .75fr) minmax(0, 1.25fr); align-items: baseline; gap: 8px; width: 100%; }
+#leadsPage .detail-body .contact-fact .fact-val { min-width: 0; overflow-wrap: anywhere; }
+#leadsPage .detail-body .stmt th { color: #8490A0; font-size: 10px; }
+#leadsPage .detail-body .stmt td { border-top: 1px solid #EEF1F5; }
+#leadsPage .detail-body .financial-pitch-card { min-height: 74px; border-left: 3px solid #6D87CB; background: #F8FAFE; }
+#leadsPage .financial-pitch-card .summary { margin: 0; line-height: 1.5; }
+#leadsPage .notes-section.section-card { min-height: 46px; padding: 9px 13px; }
+#leadsPage .notes-section .section-title { margin: 0; }
+#leadsPage .notes-textarea { background: #FAFBFD; border-color: #DEE4EC; }
+
+/* Communications remains chronological and functional, with type cues confined to compact icons. */
+#leadsPage .panel-comms { overflow: hidden; }
+#leadsPage .comms-tabs { gap: 3px; padding: 0; }
+#leadsPage .comms-tabs .tab-btn { height: 32px; padding: 0 9px; border-radius: 7px; color: #697587; font-size: 11px; }
+#leadsPage .comms-tabs .tab-btn.active { background: #EEF3FC; color: #365FAE; }
+#leadsPage .comms-tabs .tab-btn:focus-visible { outline: 2px solid #557BC9; outline-offset: -2px; }
+#leadsPage .comms-tabs .tab-badge { top: -2px; right: 0; min-width: 15px; height: 15px; border-radius: 4px; background: #C43B3B; font-size: 9px; line-height: 15px; }
+#leadsPage .comms { min-height: 0; background: #FFFFFF; }
+#leadsPage .ios-nav { min-height: 44px; height: 44px; background: #F7F8FB; border-bottom: 1px solid #E7EBF1; }
+#leadsPage .ios-title { color: #4A5261; font-size: 12px; font-weight: 650; }
+#leadsPage .ios-body { background: #FFFFFF; }
+#leadsPage .ios-row, #leadsPage .wa-row, #leadsPage .call-row { border-bottom-color: #EDF0F4; }
+#leadsPage .ios-row:hover, #leadsPage .wa-row:hover, #leadsPage .call-row:hover { background: #F8FAFD; }
+#leadsPage .ios-row.unread, #leadsPage .wa-row.unread { background: #FFFFFF; }
+#leadsPage .composer { border-top: 1px solid #E5E9F0; background: #FAFBFD; }
+
+/* Dialer: floating call console, preserving existing state machine, green LCD ink, and keyboard access. */
+#dialer.dialer {
+  width: min(468px, calc(100vw - 24px)); max-width: min(468px, calc(100vw - 24px));
+  padding: 8px; border: 1px solid #343B55; border-radius: 18px; background: #1E2235;
+  color: #FFFFFF; box-shadow: 0 18px 48px rgba(12,18,35,.34);
+}
+#dialer .dialer-main {
+  display: grid; grid-template-columns: 42px minmax(0, 1fr) auto auto 30px;
+  grid-template-rows: auto auto; align-items: center; gap: 12px 10px;
+}
+#dialer .dialer-avatar { grid-column: 1; grid-row: 1; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; background: #39425F; color: #FFFFFF; font-size: 13px; font-weight: 650; }
+#dialer .dialer-avatar[hidden] { display: none; }
+#dialer .dialer-who { grid-column: 2 / 5; grid-row: 1; align-self: center; }
+#dialer .dialer-name { color: #FFFFFF; font-size: 14px; font-weight: 650; }
+#dialer .dialer-sub { gap: 8px; margin-top: 3px; }
+#dialer .dialer-status { color: #C3CAD8; font-size: 11px; }
+#dialer .dialer-status.warn, #dialer[data-tone="wait"] .dialer-status { color: #E7B968; }
+#dialer .dialer-timer { color: #35C94A; font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums; }
+#dialer .dialer-min { grid-column: 5; grid-row: 1; width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,.07); color: #B9C1D0; }
+#dialer .dialer-min:hover { background: rgba(255,255,255,.13); color: #FFFFFF; }
+#dialer .dial-keypad { grid-column: 1; grid-row: 2; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; background: #2A3048; color: #D0D6E2; }
+#dialer .dial-keypad:hover, #dialer .dial-keypad.active { background: #36405E; color: #FFFFFF; }
+#dialer .dialer-input {
+  grid-column: 2; grid-row: 2; width: 100% !important; min-width: 0; max-width: 100%; height: 42px; padding: 0 9px;
+  border: 1px solid #C97B2A; border-radius: 9px; background: #07130B; color: #35C94A;
+  -webkit-text-fill-color: #35C94A; font-family: var(--font); font-size: 14px; font-weight: 700;
+  font-variant-numeric: tabular-nums; letter-spacing: 0; text-align: center;
+}
+#dialer .dialer-input:focus { border-color: #35C94A; background: #0B1B10; outline: 2px solid rgba(53,201,74,.35); outline-offset: 1px; }
+#dialer .dialer-input::placeholder { color: #718579; }
+#dialer .dial-action { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; grid-row: 2; }
+#dialer #declineAction { grid-column: 3; }
+#dialer #declineAction[hidden] { display: none; }
+#dialer .dial-action:not(#declineAction) { grid-column: 4; }
+#dialer .dial-circle { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.14); background: #35C94A; box-shadow: 0 4px 12px rgba(53,201,74,.22); }
+#dialer .dial-circle:hover { background: #27B942; }
+#dialer .dial-circle.end { background: #CF4A4A; box-shadow: 0 4px 12px rgba(207,74,74,.2); }
+#dialer .dial-circle.end:hover { background: #B93838; }
+#dialer .dial-action-label { color: #BEC6D4; font-size: 10px; font-weight: 600; }
+#dialer .dial-fold { grid-column: 1 / -1; }
+#dialer .dial-ctrls { gap: 6px; margin-top: 4px; padding-top: 9px; border-top: 1px solid rgba(226,230,240,.18); }
+#dialer .dial-ctrl { min-height: 54px; border-radius: 9px; color: #C7CEDB; }
+#dialer .dial-ctrl:hover, #dialer .dial-ctrl.active { background: rgba(255,255,255,.08); color: #FFFFFF; }
+#dialer .dial-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,.06); }
+#dialer .dial-ctrl-label { color: inherit; font-size: 10px; }
+#dialer .dial-more-trigger { min-height: 54px; color: #C7CEDB; }
+#dialer .dial-more-menu { background: #282F47; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+#dialer .keypad { left: 0; grid-template-columns: repeat(3, 3.25rem); gap: 7px; padding: 9px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; background: #252C43; }
+#dialer .key-btn { height: 2.75rem; border: 1px solid rgba(255,255,255,.08); border-radius: 9px; background: #303853; color: #FFFFFF; font-size: 14px; font-weight: 600; }
+#dialer .key-btn:hover { background: #3A4564; }
+#dialer .key-btn:active { background: #466BB8; }
+#dialer :focus-visible { outline-color: #90AEF2; }
+
+/* Dialer idle row: wider console, reduced height, and every primary control on one line. */
+#dialer.dialer {
+  width: min(540px, calc(100vw - 24px));
+  max-width: min(540px, calc(100vw - 24px));
+  padding: 6px 8px;
+}
+#dialer .dialer-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+}
+#dialer .dialer-avatar { width: 32px; height: 32px; flex: 0 0 32px; font-size: 11px; }
+#dialer .dialer-who { flex: 1 1 auto; min-width: 96px; }
+#dialer .dialer-name { font-size: 12px; }
+#dialer .dialer-sub { gap: 5px; margin-top: 1px; }
+#dialer .dialer-status { font-size: 10px; }
+#dialer .dialer-timer { font-size: 10px; }
+#dialer .dial-keypad { width: 32px; height: 32px; flex: 0 0 32px; }
+#dialer .dialer-input {
+  width: 100px !important;
+  min-width: 100px;
+  max-width: 100px;
+  height: 32px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+#dialer .dial-action { flex: 0 0 38px; min-width: 38px; gap: 1px; }
+#dialer .dial-circle { width: 32px; height: 32px; }
+#dialer .dial-action-label { font-size: 8px; line-height: 1; }
+#dialer .dialer-min { width: 24px; height: 24px; flex: 0 0 24px; }
+#dialer .dial-fold { margin-top: 2px; }
+
+/* Topbar phone control: compact premium status pill after removing the work-scope switch. */
+.topbar-right { gap: 8px; }
+.phone-ctl {
+  height: 32px;
+  margin-right: 0;
+  border: 1px solid #D5DEED;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7F9FD 100%);
+  box-shadow: 0 2px 8px rgba(39,55,84,.08);
+  overflow: hidden;
+}
+.phone-ctl button { min-height: 32px; color: #4D5B73; }
+.phone-ctl-open { gap: 6px; padding: 0 8px; border-radius: 9px 0 0 9px; }
+.phone-ctl-open:hover { background: #EEF5FF; color: #315EA8; }
+.phone-ctl-pick { gap: 6px; padding: 0 9px 0 8px; border-left-color: #E4EAF3 !important; border-radius: 0 9px 9px 0; font-size: 11px !important; font-weight: 650 !important; }
+.phone-ctl-pick:hover { background: #F3F7FD; color: #315EA8; }
+.phone-ctl-icon { width: 20px; height: 20px; align-items: center; justify-content: center; border-radius: 6px; background: #EAF7EF; color: #168451; }
+.phone-ctl-icon .ic { width: 12px; height: 12px; }
+.phone-ctl-icon .dot { right: -2px; bottom: -2px; width: 6px; height: 6px; box-shadow: 0 0 0 2px #FFFFFF; }
+.phone-ctl-time { font-size: 10px; font-weight: 700; color: #168451; }
+
+/* Final page-level rhythm: 8px between major content surfaces. */
+#dashPage .db-head { display: none; }
+#dashPage .db-stats,
+#dashPage .db-sections,
+#scanPage .sc-workspace,
+#scanPage .sc-intake,
+#scanPage .sc-output,
+#campPage .cp-builder,
+#campPage .cp-overview,
+#campPage .cp-board,
+#campPage .cp-audience,
+#logPage .al-overview,
+#logPage .al-days { gap: var(--panel-gap); }
+
+/* Communications tab strip: keep the All/Messages/Calls/Email row compact. */
+#leadsPage .panel-comms > .comms-head {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 8px;
+}
+#leadsPage .comms-head .comms-tabs {
+  gap: 3px;
+  padding: 0;
+}
+#leadsPage .comms-head .comms-tabs .tab-btn {
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 7px;
+  font-size: 11px;
+}
+#leadsPage .panel-comms > .comms-head > .panel-tools .icon-btn {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+}
+#leadsPage .panel-comms .ios-nav {
+  height: 24px;
+  min-height: 24px;
+  padding: 0 8px;
+  gap: 3px;
+}
+#leadsPage .panel-comms .ios-nav.wa { height: 26px; min-height: 26px; }
+#leadsPage .panel-comms .ios-title,
+#leadsPage .panel-comms .ios-back { font-size: 11px; }
+#leadsPage .panel-comms .ios-tools { gap: 2px; }
+#leadsPage .panel-comms .ios-icon { width: 22px; height: 22px; }
+
+/* Scanner: intake and current output side by side; live Results always stay real and visible. */
+#scanPage.sc-page {
+  display: flex; flex-direction: column; gap: var(--panel-gap); min-width: 0; min-height: 0;
+  padding: 0; overflow: auto; background: var(--work-canvas);
+}
+#scanPage[hidden] { display: none; }
+#scanPage .sc-workspace {
+  display: flex; flex-direction: column; gap: var(--panel-gap);
+  flex: 1 1 auto; min-height: 0; min-width: 0;
+}
+#scanPage .sc-intake { display: grid; grid-template-columns: 1fr; grid-template-areas: "source" "sample"; gap: var(--panel-gap); min-width: 0; overflow: visible; }
+#scanPage .sc-output { display: flex; flex-direction: column; gap: var(--panel-gap); min-width: 0; min-height: 0; width: 100%; flex: 1 1 auto; }
+#scanPage .sc-source { grid-area: source; }
+#scanPage .sc-settings { display: none; }
+#scanPage .sc-sample { grid-area: sample; }
+#scanPage .sc-source, #scanPage .sc-settings, #scanPage .sc-sample, #scanPage .sc-results {
+  border: 1px solid var(--work-line); border-radius: 14px; background: #FFFFFF; box-shadow: 0 4px 14px rgba(25,35,58,.04);
+}
+#scanPage .sc-results { min-height: 26rem; width: 100%; }
+#scanPage .sc-source.sc-compact { min-height: 44px; }
+#scanPage .sc-hit { min-height: 182px; gap: 7px; padding: 18px; }
+#scanPage .sc-hit-title { color: #4A5261; font-size: 14px; font-weight: 650; }
+#scanPage .sc-hit-sub { color: #788496; font-size: 11px; }
+#scanPage .sc-folder { bottom: 11px; }
+#scanPage .sc-settings {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+  flex: 0 0 auto; padding: 13px; align-items: stretch;
+}
+#scanPage .sc-set { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; color: #6F7B8D; font-size: 10.5px; font-weight: 600; }
+#scanPage .sc-set:nth-of-type(3) { grid-column: 1 / -1; }
+#scanPage .sc-set input, #scanPage .sc-set .sc-money-in { width: 100%; height: 36px; padding: 0 9px; border: 1px solid #DDE3EC; border-radius: 7px; background: #F8F9FC; color: #4A5261; font-size: 12px; text-align: left; }
+#scanPage .sc-set input:focus { border-color: #6686CF; outline: 2px solid rgba(102,134,207,.18); }
+#scanPage .sc-more { grid-column: 1 / -1; justify-self: end; }
+#scanPage .sc-more-trigger { height: 32px; padding: 0 8px; border: 1px solid #E1E6EF; border-radius: 7px; background: #F8F9FC; color: #687589; font-size: 11px; }
+#scanPage .sc-sample {
+  flex: 1 0 250px; min-height: 250px; display: flex; flex-direction: column; gap: 13px;
+  padding: 14px; overflow: hidden;
+}
+#scanPage .sc-sample-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+#scanPage .sc-sample-head > div { display: flex; flex-direction: column; gap: 4px; }
+#scanPage .sc-sample-head > div > span { color: #768297; font-size: 9px; font-weight: 700; letter-spacing: .07em; }
+#scanPage .sc-sample-head h2 { margin: 0; color: #4A5261; font-size: 13px; font-weight: 650; }
+#scanPage .sc-sample-tag { padding: 4px 7px; border: 1px solid #DCE3F1; border-radius: 5px; background: #EEF2FA; color: #65738A; font-size: 9px; font-weight: 650; }
+#scanPage .sc-sample-company { display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid #E8ECF3; border-radius: 9px; background: #F8FAFD; }
+#scanPage .sc-sample-company span, #scanPage .sc-sample-company small { color: #8390A1; font-size: 10px; }
+#scanPage .sc-sample-company strong { color: #4A5261; font-size: 12px; font-weight: 650; }
+#scanPage .sc-sample-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+#scanPage .sc-sample-metrics > div { display: flex; flex-direction: column; gap: 4px; padding: 8px; border: 1px solid #EBEFF4; border-radius: 8px; background: #FFFFFF; }
+#scanPage .sc-sample-metrics > div:last-child { grid-column: 1 / -1; }
+#scanPage .sc-sample-metrics span { color: #8590A0; font-size: 9.5px; }
+#scanPage .sc-sample-metrics strong { color: #4A5261; font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; }
+#scanPage .sc-sample-docs { display: flex; flex-wrap: wrap; gap: 5px; }
+#scanPage .sc-sample-docs span { padding: 4px 6px; border: 1px solid #E5EAF1; border-radius: 5px; background: #F7F8FB; color: #718094; font-size: 9px; }
+#scanPage .sc-sample p { margin: auto 0 0; color: #8792A1; font-size: 10px; line-height: 1.4; }
+#scanPage .sc-output { overflow: hidden; }
+#scanPage .sc-progress { padding: 9px 12px; border: 1px solid #DFE5EF; border-radius: 10px; background: #FFFFFF; }
+#scanPage .sc-results { flex: 1 1 auto; min-height: 26rem; overflow: hidden; }
+#scanPage .sc-head { min-height: 46px; height: 46px; padding: 0 14px; background: #FFFFFF; border-bottom: 1px solid #E8ECF2; }
+#scanPage .sc-head .panel-title { color: #4A5261; font-size: 13px; font-weight: 650; }
+#scanPage .sc-grid-wrap { flex: 1; min-height: 0; background: #FFFFFF; }
+#scanPage .sg { font-size: 11.5px; }
+#scanPage .sg th { height: 38px; background: #F5F7FA; color: #697587; font-size: 10px; font-weight: 650; }
+
+@media (max-width: 64rem) {
+  #scanPage .sc-intake { grid-template-columns: 1fr; grid-template-areas: "source" "settings" "sample"; }
+}
+#scanPage .sg td { height: 38px; color: #4A5261; font-size: 11px; }
+#scanPage .sg .sc-grid-empty td { height: 112px; padding: 18px; background: #FBFCFE; color: #7A8697; font-size: 12px; text-align: center; white-space: normal; }
+#scanPage .sc-grid-wrap:focus-visible { outline: 2px solid #6686CF; outline-offset: -2px; }
+#scanPage .sc-audit { flex: 0 0 auto; border: 1px solid var(--work-line); border-radius: 12px; background: #FFFFFF; }
+#scanPage .sc-audit-head { min-height: 42px; height: 42px; padding: 0 13px; border-radius: 11px; background: #FFFFFF; }
+#scanPage .sc-audit.open .sc-audit-head { border-radius: 11px 11px 0 0; }

@@ -1,0 +1,21 @@
+/* ── GLOBAL SEARCH ── */
+.gs-box {
+  position: absolute; top: calc(100% + .375rem); left: 0; z-index: 60; width: max(100%, 27.5rem); max-height: 70vh; overflow-y: auto; padding: .375rem 0;
+  background: var(--bg-surface); border: 1px solid var(--border); border-radius: .625rem; box-shadow: var(--shadow-lg);
+}
+.gs-box[hidden] { display: none; }
+.gs-head {
+  padding: .5rem 1rem .25rem; font-size: calc(.625rem * var(--crm-font-scale, 1)); font-weight: 700; letter-spacing: .0625rem; text-transform: uppercase; color: var(--text-muted);
+}
+.gs-item {
+  display: flex; align-items: center; gap: .625rem; width: 100%; padding: .5rem 1rem; border: none; background: none;
+  text-align: left; font: inherit; color: inherit; cursor: pointer;
+}
+.gs-item .ic { color: var(--text-muted); }
+.gs-item[aria-selected="true"] { background: var(--bg-row-sel); }
+.gs-item:hover { background: var(--bg-row-hover); }
+.gs-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.gs-title { font-size: calc(.78125rem * var(--crm-font-scale, 1)); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gs-sub { font-size: calc(.6875rem * var(--crm-font-scale, 1)); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gs-when { flex-shrink: 0; font-size: calc(.6875rem * var(--crm-font-scale, 1)); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.gs-none { padding: .75rem 1rem; font-size: calc(.75rem * var(--crm-font-scale, 1)); color: var(--text-muted); }

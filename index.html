@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" class="still">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
+  <title>CRM</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/shell.css">
+  <link rel="stylesheet" href="css/chrome.css">
+  <link rel="stylesheet" href="css/dialer.css">
+  <link rel="stylesheet" href="css/leads.css">
+  <link rel="stylesheet" href="css/dash.css">
+  <link rel="stylesheet" href="css/mail.css">
+  <link rel="stylesheet" href="css/scan.css">
+  <link rel="stylesheet" href="css/camp.css">
+  <link rel="stylesheet" href="css/log.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/search.css">
+  <link rel="stylesheet" href="css/reminders.css">
+  <link rel="stylesheet" href="css/review-overrides.css?v=crm-review-29">
+  <link rel="stylesheet" href="css/ops-redesign.css?v=crm-ops-8">
+  <link rel="stylesheet" href="css/three-workspaces.css?v=crm-workspace-9">
+  <script src="js/store-view.js"></script>
+</head>
+<body data-page="leads">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></symbol>
+  <symbol id="i-speaker" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></symbol>
+  <symbol id="i-transfer" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></symbol>
+  <symbol id="i-userplus" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+  <symbol id="i-bluetooth" viewBox="0 0 24 24"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-sms" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.7 3.86a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="i-mailopen" viewBox="0 0 24 24"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-contacts" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.66V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.66"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M14 7l-5 5 5 5M9 12h5"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-outgoing" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="4 12 9 17 20 6"/></symbol>
+  <symbol id="i-checks" viewBox="0 0 24 24"><polyline points="1 12 6 17 17 6"/><polyline points="9 15 11 17 22 6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="m-menu" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></symbol>
+  <symbol id="m-search" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
+  <symbol id="m-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+  <symbol id="m-tune" viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></symbol>
+  <symbol id="m-bell" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></symbol>
+  <symbol id="m-settings" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></symbol>
+  <symbol id="m-edit" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></symbol>
+  <symbol id="m-add" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></symbol>
+  <symbol id="m-group" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></symbol>
+  <symbol id="m-cloud" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></symbol>
+  <symbol id="m-inbox" viewBox="0 0 24 24"><path d="M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z"/></symbol>
+  <symbol id="m-snooze" viewBox="0 0 24 24"><path d="M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12.5 8H11v6l4.75 2.85.75-1.23-4-2.37V8zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></symbol>
+  <symbol id="m-send" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></symbol>
+  <symbol id="m-schedule" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></symbol>
+  <symbol id="m-draft" viewBox="0 0 24 24"><path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/></symbol>
+  <symbol id="m-doneall" viewBox="0 0 24 24"><path d="M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z"/></symbol>
+  <symbol id="m-done" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></symbol>
+  <symbol id="m-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></symbol>
+  <symbol id="m-starline" viewBox="0 0 24 24"><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></symbol>
+  <symbol id="m-spam" viewBox="0 0 24 24"><path d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zM12 17.3c-.72 0-1.3-.58-1.3-1.3 0-.72.58-1.3 1.3-1.3.72 0 1.3.58 1.3 1.3 0 .72-.58 1.3-1.3 1.3zm1-4.3h-2V7h2v6z"/></symbol>
+  <symbol id="m-delete" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></symbol>
+  <symbol id="m-deleteforever" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></symbol>
+  <symbol id="m-history" viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></symbol>
+  <symbol id="m-mail" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></symbol>
+  <symbol id="m-dropdown" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></symbol>
+  <symbol id="m-refresh" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></symbol>
+  <symbol id="m-left" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></symbol>
+  <symbol id="m-right" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></symbol>
+  <symbol id="m-splitnone" viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 12H5V7h14v10z"/></symbol>
+  <symbol id="m-splitv" viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm8 12H5V7h6v10zm8 0h-6V7h6v10z"/></symbol>
+  <symbol id="m-splith" viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 12H5v-4h14v4zm0-6H5V7h14v4z"/></symbol>
+  <symbol id="m-archive" viewBox="0 0 24 24"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"/></symbol>
+  <symbol id="m-read" viewBox="0 0 24 24"><path d="M21.99 8c0-.72-.37-1.35-.94-1.7L12 1 2.95 6.3C2.38 6.65 2 7.28 2 8v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2l-.01-10zM12 13L3.74 7.84 12 3l8.26 4.84L12 13z"/></symbol>
+  <symbol id="m-unread" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></symbol>
+  <symbol id="m-move" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 12v-3h-4v-4h4V8l5 5-5 5z"/></symbol>
+  <symbol id="m-more" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></symbol>
+  <symbol id="m-morehoriz" viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></symbol>
+  <symbol id="m-important" viewBox="0 0 24 24"><path d="M3.5 18.99l11 .01c.67 0 1.27-.33 1.63-.84L20.5 12l-4.37-6.16c-.36-.51-.96-.84-1.63-.84l-11 .01L8.34 12 3.5 18.99z"/></symbol>
+  <symbol id="m-attach" viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></symbol>
+  <symbol id="m-pdf" viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></symbol>
+  <symbol id="m-file" viewBox="0 0 24 24"><path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/></symbol>
+  <symbol id="m-back" viewBox="0 0 32 24"><path d="M26 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H26v-2z"/></symbol>
+  <symbol id="m-reply" viewBox="0 0 24 24"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></symbol>
+  <symbol id="m-replyall" viewBox="0 0 24 24"><path d="M7 8V5l-7 7 7 7v-3l-4-4 4-4zm6 1V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></symbol>
+  <symbol id="m-forward" viewBox="0 0 24 24"><path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z"/></symbol>
+  <symbol id="m-sparkle" viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></symbol>
+  <symbol id="m-minimize" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></symbol>
+  <symbol id="m-fullscreen" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></symbol>
+  <symbol id="m-exitfull" viewBox="0 0 24 24"><path d="M22 3.41L16.71 8.7 20 12h-8V4l3.29 3.29L20.59 2 22 3.41zM3.41 22l5.29-5.29L12 20v-8H4l3.29 3.29L2 20.59 3.41 22z"/></symbol>
+  <symbol id="m-popout" viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></symbol>
+  <symbol id="m-undo" viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></symbol>
+  <symbol id="m-redo" viewBox="0 0 24 24"><path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/></symbol>
+  <symbol id="m-fill" viewBox="0 0 24 24"><path d="M16.56 8.94L7.62 0 6.21 1.41l2.38 2.38-5.15 5.15c-.59.59-.59 1.54 0 2.14l7.38 7.38c.59.59 1.54.59 2.14 0l7.38-7.38c.6-.59.6-1.54 0-2.14l-3.78-3.78zm-8.8 6.54L3.8 11.52l4.8-4.8 3.96 3.96-4.8 4.8zM20 18c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-2-12h4v2h-4V6z"/></symbol>
+  <symbol id="m-alignleft" viewBox="0 0 24 24"><path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"/></symbol>
+  <symbol id="m-aligncenter" viewBox="0 0 24 24"><path d="M7 15v2h10v-2H7zm-4 6h18v-2H3v2zm0-8h18v-2H3v2zm4-6v2h10V7H7zM3 3v2h18V3H3z"/></symbol>
+  <symbol id="m-alignright" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm6-4h12v-2H9v2zm-6-4h18v-2H3v2zm6-4h12V7H9v2zM3 3v2h18V3H3z"/></symbol>
+  <symbol id="m-ol" viewBox="0 0 24 24"><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></symbol>
+  <symbol id="m-ul" viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/></symbol>
+  <symbol id="m-quote" viewBox="0 0 24 24"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></symbol>
+  <symbol id="m-clear" viewBox="0 0 24 24"><path d="M3.27 5L2 6.27l6.97 6.97L6.5 19h3l1.57-3.66L16.73 21 18 19.73 3.27 5zM6 5v.18L8.82 8h2.4l-.72 1.68 2.1 2.1L14.21 8H20V5H6z"/></symbol>
+  <symbol id="m-code" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></symbol>
+  <symbol id="m-format" viewBox="0 0 24 24"><path d="M9.62 12L12 5.67 14.37 12H9.62zM11 3L5.5 17h2.25l1.12-3h6.25l1.12 3h2.25L13 3h-2zM5 19v2h14v-2H5z"/></symbol>
+  <symbol id="m-link" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></symbol>
+  <symbol id="m-emoji" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></symbol>
+  <symbol id="m-image" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></symbol>
+  <symbol id="m-signature" viewBox="0 0 24 24"><path d="M22 24H2v-4h20v4zM13.06 5.19l3.75 3.75L7.75 18H4v-3.75l9.06-9.06zm4.82 2.68-3.75-3.75 1.83-1.83c.39-.39 1.02-.39 1.41 0l2.34 2.34c.39.39.39 1.02 0 1.41l-1.83 1.83z"/></symbol>
+  <symbol id="m-template" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></symbol>
+  <symbol id="m-visible" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></symbol>
+  <symbol id="m-hidden" viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></symbol>
+  <symbol id="m-warning" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></symbol>
+  <symbol id="m-upload" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></symbol>
+  <symbol id="m-rule" viewBox="0 0 24 24"><path d="M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></symbol>
+  <symbol id="i-reply" viewBox="0 0 24 24"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></symbol>
+  <symbol id="i-forward" viewBox="0 0 24 24"><polyline points="15 17 20 12 15 7"/><path d="M4 18v-2a4 4 0 0 1 4-4h12"/></symbol>
+  <symbol id="i-paperclip" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></symbol>
+  <symbol id="i-sendmail" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-open" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-campaign" viewBox="0 0 24 24"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+  <symbol id="i-keypad" viewBox="0 0 24 24"><circle cx="5" cy="5" r="1.4"/><circle cx="12" cy="5" r="1.4"/><circle cx="19" cy="5" r="1.4"/><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/><circle cx="5" cy="19" r="1.4"/><circle cx="12" cy="19" r="1.4"/><circle cx="19" cy="19" r="1.4"/></symbol>
+</svg>
+
+<div class="app">
+
+  <h1 class="sr-only">CRM</h1>
+
+  <!-- ── TOPBAR ── -->
+  <header class="topbar">
+    <button class="topbar-logo" id="navToggle" type="button" aria-label="Side menu" aria-controls="sidebar" aria-expanded="true">
+      <svg width="1.125rem" height="1.125rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/>
+        <line x1="12" y1="22" x2="12" y2="15.5"/>
+        <line x1="22" y1="8.5" x2="12" y2="15.5"/>
+        <line x1="2" y1="8.5" x2="12" y2="15.5"/>
+      </svg>
+      <span>CRM</span>
+    </button>
+    <div class="topbar-search">
+      <span class="search-icon">
+        <svg width="0.8125rem" height="0.8125rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </span>
+      <input type="text" placeholder="Search leads, emails, messages…" id="globalSearch" autocomplete="off" role="combobox" aria-label="Search the CRM" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list">
+      <div class="gs-box" id="searchResults" role="listbox" aria-label="Search results" hidden></div>
+    </div>
+    <div class="topbar-right">
+      <div class="phone-ctl" id="phoneCtl">
+        <button class="phone-ctl-open" id="phoneOpen" type="button" aria-expanded="false" aria-controls="dialer"><span class="phone-ctl-icon"><svg class="ic" width="0.875rem" height="0.875rem"><use href="#i-phone"/></svg><i class="dot"></i></span><span class="phone-ctl-time" id="phoneTime"></span></button>
+        <button class="phone-ctl-pick" id="phonePick" type="button" aria-haspopup="menu"><span id="phoneName"></span><svg class="ic" width="0.5625rem" height="0.5625rem"><use href="#i-chevron"/></svg></button>
+      </div>
+      <div class="notif">
+        <button class="topbar-btn" id="notifBtn" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+          <svg width="1rem" height="1rem" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/>
+          </svg>
+        </button>
+        <span class="notif-badge" id="notifBadge"></span>
+        <div class="notif-menu" id="notifMenu" inert>
+          <div class="notif-head"><span class="notif-title">Notifications</span><span class="notif-count" id="notifCount"></span><button class="link-btn" id="notifReadAll">Mark all as read</button></div>
+          <div class="notif-list" id="notifList"></div>
+        </div>
+      </div>
+      <time class="topbar-clock" id="topClock"><span class="clock-time" id="clockTime"></span><span class="clock-date" id="clockDate"></span></time>
+    </div>
+  </header>
+
+  <div class="nb-stack" id="nbStack" role="region" aria-label="New notifications" aria-live="polite"></div>
+
+  <!-- ── BODY ── -->
+  <div class="body-area">
+
+    <!-- ── SIDEBAR ── -->
+    <nav class="sidebar" id="sidebar" aria-label="Pages">
+      <div class="sidebar-section-label">Workspace</div>
+      <button class="nav-item" data-page="dash" aria-current="false">
+        <svg width="0.875rem" height="0.875rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="nav-label">Dashboard</span>
+      </button>
+      <button class="nav-item active" data-page="leads" aria-current="page">
+        <svg width="0.875rem" height="0.875rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="nav-label">Leads</span>
+      </button>
+      <button class="nav-item" data-page="mail" aria-current="false">
+        <svg width="0.875rem" height="0.875rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span class="nav-label">Email</span>
+      </button>
+      <button class="nav-item" data-page="scan" aria-current="false">
+        <svg width="0.875rem" height="0.875rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+        <span class="nav-label">Scanner</span>
+      </button>
+      <button class="nav-item" data-page="camp" aria-current="false">
+        <svg class="ic" width="0.875rem" height="0.875rem"><use href="#i-campaign"/></svg>
+        <span class="nav-label">Campaign</span>
+      </button>
+      <button class="nav-item" data-page="log" aria-current="false">
+        <svg width="0.875rem" height="0.875rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="nav-label">Activity Log</span>
+      </button>
+      <div class="sidebar-footer">
+        <button class="sidebar-user" id="settingsBtn" type="button" title="Settings" aria-haspopup="dialog" aria-controls="settingsDialog">
+          <span class="sidebar-user-avatar" id="sidebarAvatar"></span>
+          <span class="sidebar-user-text">
+            <span class="sidebar-user-name" id="sidebarName"></span>
+            <span class="sidebar-user-role" id="sidebarRole"></span>
+          </span>
+          <span class="sidebar-status-dot"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ── THREE PANELS ── -->
+    <main class="workspace" id="leadsPage">
+
+      <section class="panel panel-leads">
+        <div class="panel-head">
+          <span class="panel-title">Lead Pipeline</span>
+          <span class="panel-count" id="leadCount"></span>
+          <div class="panel-tools">
+            <details class="lead-options" id="leadOptions">
+              <summary class="icon-btn lead-options-trigger" title="Lead list options" aria-label="Lead list options" aria-expanded="false" aria-controls="leadOptionsMenu"><svg class="ic" width="0.9375rem" height="0.9375rem" aria-hidden="true"><use href="#m-tune"/></svg></summary>
+              <div class="lead-options-menu" id="leadOptionsMenu" role="group" aria-label="Lead list options">
+                <label>Rep<select id="leadRepFilter"><option value="">All reps</option></select></label>
+                <label>Status<select id="leadStatusFilter"><option value="">All statuses</option><option value="NEW">New</option><option value="ATTEMPTED">Attempted</option><option value="ENGAGED">Engaged</option><option value="CONTRACT">Contract</option><option value="IGNORE">Ignore</option></select></label>
+                <label>Sort by<select id="leadSort"><option value="revenue">Revenue</option><option value="activity">Recent activity</option><option value="company">Company name</option></select></label>
+                <label>List spacing<select id="leadDensity"><option value="normal">Standard</option><option value="compact">Compact</option></select></label>
+              </div>
+            </details>
+            <button class="icon-btn" id="addLeadBtn" title="Add lead" aria-label="Add lead"><svg class="ic" width="0.875rem" height="0.875rem"><use href="#i-plus"/></svg></button>
+          </div>
+        </div>
+        <div class="lead-list" id="leadList"></div>
+      </section>
+      <div class="resizer" data-resize="leads" role="separator" aria-orientation="vertical" aria-label="Resize leads panel" tabindex="0"></div>
+
+      <section class="panel panel-detail">
+        <div class="detail" id="detail"></div>
+      </section>
+
+      <div class="resizer" data-resize="comms" role="separator" aria-orientation="vertical" aria-label="Resize communications panel" tabindex="0"></div>
+      <section class="panel panel-comms">
+        <div class="panel-head comms-head">
+          <div class="comms-tabs" id="commsTabs" role="tablist" aria-label="Communication activity">
+            <button class="tab-btn" data-tab="all" role="tab" aria-label="All">All</button>
+            <button class="tab-btn" data-tab="msgs" role="tab" aria-label="Messages">Messages<i class="tab-badge" id="badgeMsgs"></i></button>
+            <button class="tab-btn" data-tab="calls" role="tab" aria-label="Calls">Calls<i class="tab-badge" id="badgeCalls"></i></button>
+            <button class="tab-btn" data-tab="email" role="tab" aria-label="Email">Email<i class="tab-badge" id="badgeEmail"></i></button>
+          </div>
+          <div class="panel-tools">
+            <button class="icon-btn" id="contactsBtn" title="Contacts" aria-label="Contacts"><svg class="ic" width="1rem" height="1rem"><use href="#i-contacts"/></svg></button>
+            <button class="icon-btn" id="dialerToggle" title="Open or close dialer" aria-label="Open or close dialer"><svg class="ic" width="0.9375rem" height="0.9375rem"><use href="#i-keypad"/></svg></button>
+          </div>
+        </div>
+        <div class="comms" id="comms">
+          <div class="ios-nav" id="commsNav"></div>
+          <div id="commsSeg"></div>
+          <div class="ios-body" id="commsBody"></div>
+          <div class="composer" id="composer" hidden>
+            <div id="cmpSuggest"></div>
+            <div class="cmp-files" id="cmpFiles"></div>
+            <div class="cmp-row">
+              <button class="cmp-attach" id="attachBtn" title="Attach files" aria-label="Attach files"><svg class="ic" width="1rem" height="1rem"><use href="#i-plus"/></svg></button>
+              <input type="file" id="attachInput" multiple hidden>
+              <div class="cmp-field">
+                <textarea class="cmp-input" id="composerInput" rows="1" placeholder="iMessage" aria-label="Message"></textarea>
+                <button class="cmp-mic" id="micBtn" title="Voice typing" aria-label="Voice typing"><svg class="ic" width="1.0625rem" height="1.0625rem"><use href="#i-mic"/></svg></button>
+              </div>
+              <button class="cmp-send" id="sendBtn" title="Send" aria-label="Send"><svg class="ic" width="1rem" height="1rem"><use href="#i-send"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="photoInput" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        <div class="mail-host" id="mailHostComms" hidden></div>
+      </section>
+
+    </main>
+    <section class="mail-page" id="mailPage" aria-label="Email" hidden></section>
+
+    <!-- ── DASHBOARD ── -->
+    <main class="db-page" id="dashPage" aria-label="Dashboard" hidden>
+      <header class="db-head">
+        <h2 class="db-hello" id="dbHello"></h2>
+        <p class="db-date" id="dbDate"></p>
+      </header>
+      <div class="db-stats" id="dbStats"></div>
+      <div class="db-sections" id="dbGrid"></div>
+    </main>
+
+    <!-- ── SCANNER ── -->
+    <main class="sc-page" id="scanPage" aria-label="Scanner" hidden>
+      <div class="sc-workspace">
+        <aside class="sc-intake" aria-label="Scan setup">
+          <section class="sc-source" id="scanSource" aria-label="Files to scan"></section>
+          <input type="file" id="scanFiles" multiple accept=".zip,.pdf,.png,.jpg,.jpeg,.tif,.tiff,.webp,.heic,.bmp,.gif,application/zip,application/pdf,image/*" hidden>
+          <input type="file" id="scanFolder" webkitdirectory hidden>
+          <div class="sc-settings" role="group" aria-label="Scan settings">
+            <label class="sc-set">Regular scan pages<input id="setRegular" type="text" inputmode="numeric" autocomplete="off"></label>
+            <label class="sc-set">OCR scan pages<input id="setOcr" type="text" inputmode="numeric" autocomplete="off"></label>
+            <label class="sc-set">Revenue minimum<input id="setRevenue" class="sc-money-in" type="text" inputmode="decimal" autocomplete="off"></label>
+            <details class="sc-more" id="scanMore">
+              <summary class="sc-more-trigger" aria-label="More Scanner options" aria-expanded="false" aria-controls="scanMoreMenu"><svg class="mi" width="1rem" height="1rem" aria-hidden="true"><use href="#m-morehoriz"/></svg><span>More</span></summary>
+              <div class="sc-more-menu" id="scanMoreMenu" role="group" aria-label="Scanner options">
+                <button class="sc-more-item" id="scanHistoryBtn" type="button">History</button>
+                <button class="sc-more-item" id="scanTableSettings" type="button" data-menu="results" aria-haspopup="true" aria-expanded="false" aria-label="Table settings">Table settings</button>
+                <button class="sc-more-item" id="scanRescanAction" type="button" data-act="rescan" hidden></button>
+                <button class="sc-more-item" id="scanRetryAction" type="button" data-act="retry" hidden>Retry failed</button>
+                <button class="sc-more-item" id="scanNewBatchAction" type="button" data-act="new" hidden>New batch</button>
+                <span class="sc-more-meta" id="scanBatchMeta" hidden></span>
+              </div>
+            </details>
+          </div>
+          <section class="sc-sample" aria-label="Illustrative extraction preview">
+            <div class="sc-sample-head"><div><span>PREVIEW DATA</span><h2>Example extraction</h2></div><span class="sc-sample-tag">Sample only</span></div>
+            <div class="sc-sample-company"><span>Business / bank package</span><strong>Northstar Equipment Co.</strong><small>5 illustrative documents</small></div>
+            <div class="sc-sample-metrics">
+              <div><span>App revenue</span><strong>$684,000</strong></div>
+              <div><span>Monthly deposits</span><strong>$142,800</strong></div>
+              <div><span>Indicative amount</span><strong>$250,000</strong></div>
+            </div>
+            <div class="sc-sample-docs"><span>3 statements</span><span>1 application</span><span>1 owner ID</span></div>
+            <p>Illustrative only. Live Results stay empty until files are scanned.</p>
+          </section>
+        </aside>
+        <section class="sc-output" aria-label="Scan output">
+          <div class="sc-progress" id="scanProgress" hidden></div>
+          <section class="sc-results" aria-labelledby="scanResultsTitle">
+            <div class="panel-head sc-head" id="scanResultsHead"></div>
+            <div class="sc-grid-wrap scroll-always" id="scanResultsWrap" role="region" tabindex="0" aria-label="Scanner results; scroll horizontally to view more columns"><table class="sg sc-freeze" id="scanTable" data-grid="results"></table></div>
+          </section>
+        </section>
+      </div>
+      <section class="sc-audit" id="scanAudit" aria-label="Scan audit" hidden>
+        <button class="panel-head sc-audit-head" id="scanAuditHead" type="button" aria-expanded="false" aria-controls="scanAuditBody"></button>
+        <div class="sc-audit-body" id="scanAuditBody" hidden>
+          <div class="sc-audit-tools">
+            <label class="sc-check"><input type="checkbox" id="auditIssues">Issues only</label>
+            <button class="btn sc-icon" type="button" data-menu="audit" aria-haspopup="true" aria-expanded="false" title="Columns" aria-label="Audit columns"><svg class="mi" width="0.9375rem" height="0.9375rem" aria-hidden="true"><use href="#m-tune"/></svg></button>
+          </div>
+          <div class="sc-grid-wrap scroll-always"><table class="sg" id="auditTable" data-grid="audit"></table></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── CAMPAIGN ── -->
+    <main class="cp-page" id="campPage" aria-label="Campaign" hidden>
+      <section class="cp-overview" id="campOverview" aria-label="Sample campaign performance" hidden></section>
+      <div class="cp-builder" id="campBuilder" hidden>
+      <div class="cp-top">
+        <button class="btn cp-overview-back" type="button" data-camp-screen="overview" aria-label="Return to campaign overview">Overview</button>
+        <div class="seg" id="campType" role="radiogroup" aria-label="Campaign type">
+          <button type="button" role="radio" data-type="email" data-key="type-email">Email</button>
+          <button type="button" role="radio" data-type="sms" data-key="type-sms">SMS</button>
+        </div>
+        <input class="cp-name" id="campName" type="text" placeholder="Campaign name" aria-label="Campaign name" autocomplete="off" maxlength="80">
+        <span class="cp-title" id="campTitle" hidden></span>
+        <ol class="cp-steps" id="campSteps" aria-label="Campaign steps"></ol>
+        <span class="cp-saved" id="campSaved" role="status"></span>
+        <details class="cp-more" id="campMore">
+          <summary class="cp-more-trigger" aria-label="More campaign options" aria-expanded="false" aria-controls="campMoreMenu"><svg class="ic" width="1rem" height="1rem" aria-hidden="true"><use href="#m-morehoriz"/></svg><span>More</span></summary>
+          <div class="cp-more-menu" id="campMoreMenu" role="group" aria-label="Campaign options">
+            <button class="cp-more-item" type="button" id="campTplBtn">Templates</button>
+            <button class="cp-more-item" type="button" id="campHistory" data-drawer-open="history" aria-expanded="false" aria-controls="campDrawer">History</button>
+            <button class="cp-more-item" type="button" id="campNew">New campaign</button>
+            <button class="cp-more-item" type="button" id="campAdvanced" data-drawer-open="filters" aria-expanded="false" aria-controls="campDrawer"></button>
+          </div>
+        </details>
+        <button class="btn primary" type="button" id="campNext"></button>
+      </div>
+      <div class="cp-board" id="campBoard" hidden>
+        <section class="cp-channel" id="campCardEmail" data-channel="email" aria-label="Email"></section>
+        <section class="cp-channel" id="campCardSms" data-channel="sms" aria-label="SMS"></section>
+      </div>
+
+      <section class="cp-templates" id="campTemplates" hidden>
+        <div class="cp-tpl-list" id="campTplList"></div>
+        <div class="cp-tpl-edit" id="campTplEdit"></div>
+      </section>
+      <div class="cp-audience" id="campAudience">
+        <div class="cp-filters" role="group" aria-label="Audience filters">
+          <button class="cp-select" type="button" id="campRep" data-menu="reps" aria-haspopup="true" aria-expanded="false" aria-controls="campMenu"></button>
+          <button class="cp-select" type="button" id="campStatus" data-menu="statuses" aria-haspopup="true" aria-expanded="false" aria-controls="campMenu"></button>
+          <label class="cp-select">Touchpoints
+            <select id="campTouch">
+              <option value="all">All</option>
+              <option value="never">Never contacted</option>
+              <option value="contacted">Contacted before</option>
+              <option value="failed">Failed before</option>
+            </select>
+          </label>
+          <input class="input cp-w-l" id="campSearch" type="search" placeholder="Search company or contact" aria-label="Search the audience" autocomplete="off">
+        </div>
+        <section class="cp-list" aria-label="Audience">
+          <div class="panel-head cp-head">
+            <div class="cp-counts" id="campCounts" role="group" aria-label="Recipients"></div>
+            <div class="cp-reasons" id="campReasons"></div>
+          </div>
+          <div class="cp-table-wrap"><table class="cp-table" id="campTable"></table></div>
+          <div class="cp-empty" id="campEmpty" hidden></div>
+        </section>
+      </div>
+
+      <section class="cp-card" id="campSetup" aria-label="Setup" hidden></section>
+      <div class="cp-review" id="campReview" hidden></div>
+
+      <div class="cp-run" id="campRun" hidden>
+        <section class="cp-card" id="campRunTop"></section>
+        <section class="cp-list" aria-label="Live feed">
+          <div class="panel-head cp-head">
+            <div class="cp-counts" id="campFeedFilters" role="group" aria-label="Show in the feed"></div>
+            <div class="cp-feed-tools">
+              <input class="input cp-w-m" id="campFeedSearch" type="search" placeholder="Search the feed" aria-label="Search the feed" autocomplete="off">
+              <label class="cp-check"><input type="checkbox" id="campAutoScroll" checked>Auto-scroll</label>
+            </div>
+          </div>
+          <div class="cp-table-wrap" id="campFeedWrap"><table class="cp-table cp-feed" id="campFeed"></table></div>
+          <div class="cp-empty" id="campFeedEmpty" hidden></div>
+        </section>
+      </div>
+
+      <aside class="cp-drawer" id="campDrawer" aria-labelledby="campDrawerTitle" inert>
+        <div class="panel-head">
+          <h2 class="panel-title" id="campDrawerTitle"></h2>
+          <div class="panel-tools"><button class="icon-btn" type="button" data-drawer="close" title="Close" aria-label="Close"><svg class="ic" width="0.875rem" height="0.875rem"><use href="#i-x"/></svg></button></div>
+        </div>
+        <div class="cp-drawer-body" id="campDrawerBody"></div>
+        <div class="modal-foot">
+          <span class="cp-drawer-count" id="campDrawerCount" role="status"></span>
+          <button class="btn" type="button" id="campDrawerReset" data-drawer="reset"></button>
+          <button class="btn primary" type="button" data-drawer="close">Done</button>
+        </div>
+      </aside>
+      <div class="cp-menu" id="campMenu" role="group" hidden></div>
+      </div>
+    </main>
+
+    <!-- ── ACTIVITY LOG ── -->
+    <main class="workspace" id="logPage" aria-label="Activity Log" hidden>
+      <section class="al-overview" id="logOverview" aria-label="Sample activity summary"></section>
+      <section class="panel al-team" aria-labelledby="logTeamTitle">
+        <div class="panel-head">
+          <h2 class="panel-title" id="logTeamTitle"></h2>
+          <div class="panel-tools al-tools">
+            <div class="seg" id="logPeriod" role="radiogroup" aria-label="Period">
+              <button type="button" role="radio" data-period="today" data-key="period-today">Today</button>
+              <button type="button" role="radio" data-period="week" data-key="period-week">This week</button>
+            </div>
+            <details class="al-more" id="logMore">
+              <summary class="al-more-trigger" aria-label="More Activity Log filters" aria-expanded="false" aria-controls="logMoreMenu"><svg class="ic" width="1rem" height="1rem" aria-hidden="true"><use href="#m-tune"/></svg><span>More</span></summary>
+              <div class="al-more-menu" id="logMoreMenu" role="group" aria-label="Activity Log filters">
+                <label class="al-more-field" id="logRepField">Rep<select class="input" id="logRep" aria-label="Rep"></select></label>
+                <label class="al-more-field">Event type<select class="input" id="logType" aria-label="Show">
+                  <option value="all">All activity</option><option value="call">Calls</option><option value="text">Texts</option>
+                  <option value="email">Emails</option><option value="campaign">Campaigns</option><option value="lead">Leads</option>
+                </select></label>
+              </div>
+            </details>
+          </div>
+        </div>
+        <div class="al-scroll" id="logTeam"></div>
+      </section>
+      <section class="panel al-time" aria-labelledby="logTimeTitle">
+        <div class="panel-head">
+          <h2 class="panel-title" id="logTimeTitle">Timeline</h2>
+          <span class="panel-count" id="logCount"></span>
+          <div class="panel-tools al-tools">
+            <input class="input al-search" id="logSearch" type="search" placeholder="Search" aria-label="Search the timeline" autocomplete="off">
+          </div>
+        </div>
+        <div class="al-scroll" id="logTimeline"></div>
+      </section>
+    </main>
+  </div><!-- /body-area -->
+
+</div><!-- /app -->
+
+<!-- ── ADD LEAD WINDOW ── -->
+<div class="modal-backdrop" id="leadModal">
+  <form class="modal" id="leadForm" novalidate role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+    <div class="modal-head" id="leadModalTitle">Add Lead</div>
+    <div class="modal-body">
+      <div class="field wide"><label for="fCompany">Company</label><input id="fCompany" autocomplete="off"></div>
+      <div class="field"><label for="fFirst">First name</label><input id="fFirst" autocomplete="off"></div>
+      <div class="field"><label for="fLast">Last name</label><input id="fLast" autocomplete="off"></div>
+      <div class="field wide"><label for="fRevenue">Revenue</label><input id="fRevenue" inputmode="numeric" placeholder="$240,000" autocomplete="off"></div>
+      <div class="field"><label for="fPhone">Mobile</label><input id="fPhone" type="tel" placeholder="(305) 555-5555" autocomplete="off"></div>
+      <div class="field"><label for="fEmail">Email</label><input id="fEmail" type="email" autocomplete="off"></div>
+      <div class="modal-error" id="leadError" role="alert"></div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" id="leadCancel">Cancel</button>
+      <button type="submit" class="btn primary">Add lead</button>
+    </div>
+  </form>
+</div>
+
+<!-- ── SETTINGS WINDOW ── -->
+<dialog class="st-dialog" id="settingsDialog" aria-labelledby="settingsTitle">
+  <div class="modal-head st-head">
+    <h2 id="settingsTitle">Settings</h2>
+    <button class="icon-btn" type="button" id="settingsClose" aria-label="Close settings"><svg class="ic" width="0.875rem" height="0.875rem"><use href="#i-x"/></svg></button>
+  </div>
+  <div class="st-body">
+    <section class="st-section" aria-labelledby="stViewTitle">
+      <h3 class="section-title" id="stViewTitle">View</h3>
+      <div class="st-row">
+        <label for="stSize">Screen size</label>
+        <select class="input" id="stSize"></select>
+      </div>
+      <div class="st-row">
+        <label for="stFontScale">CRM-wide font size</label>
+        <select class="input" id="stFontScale">
+          <option value="0.9">Small · 90%</option>
+          <option value="1">Default · 100%</option>
+          <option value="1.1">Large · 110%</option>
+          <option value="1.2">Extra large · 120%</option>
+        </select>
+      </div>
+      <div class="st-row">
+        <span id="stTextLabel">Text size</span>
+        <div class="st-stepper" role="group" aria-labelledby="stTextLabel">
+          <button class="st-step" type="button" id="stSmaller" aria-label="Smaller text">−</button>
+          <output id="stStep" aria-live="polite"></output>
+          <button class="st-step" type="button" id="stBigger" aria-label="Bigger text">+</button>
+        </div>
+      </div>
+      <div class="st-row">
+        <label for="stLists">List spacing</label>
+        <select class="input" id="stLists">
+          <option value="comfortable">Comfortable</option>
+          <option value="normal">Normal</option>
+          <option value="compact">Compact</option>
+        </select>
+      </div>
+      <p class="st-note" id="stNow"></p>
+      <div class="st-actions"><button class="btn" type="button" id="stResetView">Reset view</button></div>
+    </section>
+    <section class="st-section" aria-labelledby="stPanelsTitle">
+      <h3 class="section-title" id="stPanelsTitle">Leads page panels</h3>
+      <div class="st-row">
+        <label for="stWidthLeads">Lead list</label>
+        <input class="st-range" type="range" id="stWidthLeads" data-panel="leads">
+        <output id="stWidthLeadsValue" for="stWidthLeads"></output>
+      </div>
+      <div class="st-row">
+        <label for="stWidthComms">Comms</label>
+        <input class="st-range" type="range" id="stWidthComms" data-panel="comms">
+        <output id="stWidthCommsValue" for="stWidthComms"></output>
+      </div>
+      <p class="st-note">Company Info takes the rest. Dragging the line between panels changes these too.</p>
+      <div class="st-actions"><button class="btn" type="button" id="stResetWidths">Reset widths</button></div>
+    </section>
+    <section class="st-section" aria-labelledby="stSoundsTitle">
+      <h3 class="section-title" id="stSoundsTitle">Sounds</h3>
+      <div class="st-row">
+        <label for="stVolume">Volume</label>
+        <input class="st-range" type="range" id="stVolume" min="0" max="100" step="5">
+        <output id="stVolumeValue" for="stVolume"></output>
+      </div>
+      <div class="st-checks" id="stSounds">
+        <label class="st-check"><input type="checkbox" data-sound="dialer">Dialer</label>
+        <label class="st-check"><input type="checkbox" data-sound="messages">Texts and WhatsApp</label>
+        <label class="st-check"><input type="checkbox" data-sound="emails">Email</label>
+        <label class="st-check"><input type="checkbox" data-sound="alerts">Other alerts</label>
+      </div>
+      <p class="st-note">Changing one plays it so you can hear it. The browser stays quiet until your first click on the page.</p>
+    </section>
+    <section class="st-section" aria-labelledby="stKeysTitle">
+      <h3 class="section-title" id="stKeysTitle">Keyboard shortcuts</h3>
+      <div class="st-actions"><button class="btn" type="button" id="stKeysBtn" aria-expanded="false" aria-controls="stKeys">Show shortcuts</button></div>
+      <div class="st-keys" id="stKeys" hidden></div>
+    </section>
+    <section class="st-section" aria-labelledby="stBackupTitle">
+      <h3 class="section-title" id="stBackupTitle">Backup and restore</h3>
+      <p class="st-note">One file with everything saved in this browser: leads, photos, notes, emails and their files, campaigns, reminders, the work log and these settings.</p>
+      <div class="st-actions">
+        <button class="btn" type="button" id="stBackup">Download backup</button>
+        <button class="btn" type="button" id="stRestore">Restore from backup</button>
+        <input type="file" id="stRestoreFile" accept=".json,application/json" hidden>
+      </div>
+    </section>
+  </div>
+  <div class="modal-foot"><button class="btn primary" type="button" id="settingsDone">Done</button></div>
+</dialog>
+
+<!-- ── SCANNER: TABLE MENU, DIALOG, SCREEN-READER STATUS ── -->
+<div class="sc-menu" id="scanMenu" role="group" aria-label="Table settings" hidden></div>
+<dialog class="sc-dialog" id="scanDialog" aria-labelledby="scanDialogTitle"></dialog>
+<div class="sr-only" id="scanLive" role="status"></div>
+
+<!-- ── CAMPAIGN: PREVIEW WINDOW ── -->
+<dialog class="cp-dialog" id="campDialog" aria-labelledby="campDialogTitle"></dialog>
+
+<!-- ── SMALL ACTION POP-UP + EMAIL TRACKING CARD ── -->
+<div class="pop" id="pop" role="menu" inert></div>
+<div class="track-card" id="trackCard" role="tooltip"></div>
+
+<!-- ── MESSAGES (bottom left) + ASK-FIRST WINDOW ── -->
+<div class="toast" id="toast" role="status" popover="manual"></div>
+<dialog class="ask" id="askBox" aria-labelledby="askTitle"></dialog>
+
+<!-- ── REMIND ME WINDOW (reminders/reminders.js) ── -->
+<dialog class="ask" id="remindBox" aria-labelledby="remindTitle">
+  <form id="remindForm" novalidate>
+    <h2 class="modal-head" id="remindTitle">Remind me</h2>
+    <div class="remind-body">
+      <div class="field"><label for="remindText">About</label><input id="remindText" autocomplete="off" placeholder="Follow up"></div>
+      <div class="field"><label for="remindAt">When (Eastern time)</label><input id="remindAt" type="datetime-local"></div>
+      <div class="remind-picks" id="remindPicks" role="group" aria-label="Quick times"></div>
+      <div class="modal-error" id="remindError" role="alert"></div>
+    </div>
+    <div class="modal-foot"><button class="btn" type="button" id="remindCancel">Cancel</button><button class="btn primary" type="submit">Save reminder</button></div>
+  </form>
+</dialog>
+
+<!-- ── DIALER: opened from the phone button in the topbar; drag it anywhere ── -->
+<section class="dialer" id="dialer" tabindex="0" aria-label="Dialer. Drag it, or use the arrow keys, to move it." inert>
+  <div class="dialer-main">
+    <span class="dialer-avatar" id="dialerAvatar" aria-hidden="true" hidden></span>
+    <div class="dialer-who">
+      <div class="dialer-name" id="dialerName"></div>
+      <div class="dialer-sub"><span class="dialer-status" id="dialerStatus" role="status"></span><span class="dialer-timer" id="dialerTimer"></span></div>
+    </div>
+    <button class="dial-keypad" id="keypadBtn" type="button" title="Keypad" aria-label="Keypad" aria-expanded="false" aria-controls="keypadPop"><svg class="ic" width="0.9375rem" height="0.9375rem"><use href="#i-keypad"/></svg></button>
+    <input class="dialer-input" id="dialInput" type="tel" autocomplete="off" aria-label="Phone number">
+    <div class="dial-action" id="declineAction" hidden><button class="dial-circle end" id="declineBtn" type="button"><svg class="ic" width="1rem" height="1rem"><use href="#i-phone"/></svg></button><span class="dial-action-label" id="declineVisibleLabel">Decline</span></div>
+    <div class="dial-action"><button class="dial-circle" id="callBtn" type="button"><svg class="ic" width="1rem" height="1rem"><use href="#i-phone"/></svg></button><span class="dial-action-label" id="callVisibleLabel">Call</span></div>
+    <button class="dialer-min" id="dialerMin" type="button" title="Close dialer" aria-label="Close dialer"><svg class="ic" width="0.75rem" height="0.75rem" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+  <div class="dial-fold" id="dialCtrlsWrap" inert><div>
+    <div class="dial-ctrls" id="dialCtrls">
+      <button class="dial-ctrl" type="button" aria-pressed="false" data-ctl="mute"><span class="dial-icon"><svg class="ic" width="0.75rem" height="0.75rem"><use href="#i-mic"/></svg></span><span class="dial-ctrl-label">Mute</span></button>
+      <button class="dial-ctrl" type="button" aria-pressed="false" data-ctl="hold"><span class="dial-icon"><svg class="ic" width="0.75rem" height="0.75rem"><use href="#i-pause"/></svg></span><span class="dial-ctrl-label">Hold</span></button>
+      <button class="dial-ctrl" type="button" aria-pressed="false" data-ctl="speaker"><span class="dial-icon"><svg class="ic" width="0.75rem" height="0.75rem"><use href="#i-speaker"/></svg></span><span class="dial-ctrl-label">Speaker</span></button>
+      <details class="dial-more" id="dialMore">
+        <summary class="dial-more-trigger" aria-label="More call controls" aria-expanded="false" aria-controls="dialMoreMenu"><svg class="ic" width="1.125rem" height="1.125rem" aria-hidden="true"><use href="#m-morehoriz"/></svg><span>More</span></summary>
+        <div class="dial-more-menu" id="dialMoreMenu" role="group" aria-label="Additional call controls">
+          <button class="dial-ctrl" type="button" aria-pressed="false" data-ctl="transfer"><span class="dial-icon"><svg class="ic" width="1rem" height="1rem"><use href="#i-transfer"/></svg></span><span class="dial-ctrl-label">Transfer</span></button>
+          <button class="dial-ctrl" type="button" aria-pressed="false" data-ctl="add"><span class="dial-icon"><svg class="ic" width="1rem" height="1rem"><use href="#i-userplus"/></svg></span><span class="dial-ctrl-label">Add participant</span></button>
+        </div>
+      </details>
+    </div>
+  </div></div>
+  <div class="keypad" id="keypadPop" role="group" aria-label="Keypad" inert><button class="key-btn" type="button" data-key="1">1</button><button class="key-btn" type="button" data-key="2">2</button><button class="key-btn" type="button" data-key="3">3</button><button class="key-btn" type="button" data-key="4">4</button><button class="key-btn" type="button" data-key="5">5</button><button class="key-btn" type="button" data-key="6">6</button><button class="key-btn" type="button" data-key="7">7</button><button class="key-btn" type="button" data-key="8">8</button><button class="key-btn" type="button" data-key="9">9</button><button class="key-btn" type="button" data-key="*">✱</button><button class="key-btn" type="button" data-key="0">0</button><button class="key-btn" type="button" data-key="#">#</button></div>
+</section>
+
+  <script src="js/shared.js?v=crm-review-2"></script>
+  <script src="js/sounds.js"></script>
+  <script src="js/sample-data.js"></script>
+  <script src="js/mail.js"></script>
+  <script src="js/reminders.js"></script>
+  <script src="js/leads.js?v=crm-review-6"></script>
+  <script src="js/dash.js?v=crm-ops-5"></script>
+  <script src="js/scan.js?v=crm-scan-5"></script>
+  <script src="js/camp.js?v=crm-ops-6"></script>
+  <script src="js/log.js?v=crm-ops-5"></script>
+  <script src="js/dialer.js?v=crm-review-3"></script>
+  <script src="js/search.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

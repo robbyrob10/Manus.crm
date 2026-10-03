@@ -1,0 +1,167 @@
+/* Colours for each kind of activity: its icon (kindIcon, no circle behind it) and the edge of a notification banner. */
+[data-kind="call"], [data-kind="lead"] { --kind-fg: var(--accent-teal); }
+[data-kind="sms"]   { --kind-fg: var(--accent-sms); }
+[data-kind="wa"]    { --kind-fg: #1E9E57; }
+[data-kind="email"] { --kind-fg: var(--accent-email); }
+[data-kind="open"]  { --kind-fg: var(--accent-blue); }
+[data-kind="meet"], [data-kind="campaign"], [data-kind="remind"] { --kind-fg: var(--accent-amber); }
+[data-kind="note"]  { --kind-fg: var(--text-muted); }
+.kind {
+  width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  color: var(--kind-fg);
+}
+
+/* Avatars (avatar()): a photo, or initials on grey or on a given tint */
+.avatar {
+  width: 1.875rem; height: 1.875rem; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  background: var(--tint, linear-gradient(#A7ADBA, #858A96)); color: #fff; font-size: calc(.78125rem * var(--crm-font-scale, 1)); font-weight: 600; letter-spacing: .01875rem;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar.sm { width: 1.75rem; height: 1.75rem; font-size: calc(.6875rem * var(--crm-font-scale, 1)); }
+.avatar.md { width: 1.875rem; height: 1.875rem; font-size: calc(.75rem * var(--crm-font-scale, 1)); }
+.avatar.lg { width: 2.5rem; height: 2.5rem; font-size: calc(1.0625rem * var(--crm-font-scale, 1)); }
+.avatar.xl { width: 4.75rem; height: 4.75rem; font-size: calc(1.875rem * var(--crm-font-scale, 1)); }
+
+/* Notifications (topbar) */
+.notif { position: relative; }
+.notif-badge {
+  position: absolute; top: -.125rem; right: -.1875rem; min-width: .9375rem; height: .9375rem; padding: 0 .25rem; border-radius: .25rem;
+  background: var(--accent-red); color: #fff; font-size: calc(.5625rem * var(--crm-font-scale, 1)); font-weight: 700; line-height: .9375rem; text-align: center; pointer-events: none;
+}
+.notif-badge:empty { display: none; }
+.notif-menu {
+  position: absolute; right: -.5rem; top: calc(100% + .625rem); width: 25rem;
+  display: flex; flex-direction: column; background: var(--bg-surface); border: 1px solid var(--border); border-radius: .75rem; box-shadow: var(--shadow-lg);
+  overflow: hidden; visibility: hidden; opacity: 0; transform: translateY(-.25rem);
+  transition: opacity 150ms var(--ease), transform 150ms var(--ease), visibility 0s linear 150ms;
+}
+.notif-menu.open { visibility: visible; opacity: 1; transform: none; transition: opacity 150ms var(--ease), transform 150ms var(--ease), visibility 0s; }
+.notif-head { display: flex; align-items: center; gap: .5rem; padding: .875rem 1.125rem .75rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.notif-title { font-size: calc(.875rem * var(--crm-font-scale, 1)); font-weight: 700; }
+.notif-count { padding: .0625rem .4375rem; border-radius: .625rem; background: var(--accent-blue-light); color: var(--accent-blue); font-size: calc(.6875rem * var(--crm-font-scale, 1)); font-weight: 700; }
+.notif-count:empty { display: none; }
+.notif-head .link-btn { margin-left: auto; font-size: calc(.71875rem * var(--crm-font-scale, 1)); font-weight: 600; }
+.notif-list { max-height: min(28.75rem, calc(100dvh - 8.75rem)); overflow-y: auto; }
+.notif-item { position: relative; display: flex; gap: .75rem; padding: .875rem 1.125rem; border-bottom: 1px solid var(--border); transition: background .12s; }
+.notif-item:last-child { border-bottom: none; }
+.notif-item:hover { background: var(--bg-panel); }
+.notif-item.unread { background: #F7F9FF; }
+.notif-item.unread::before { content: ''; position: absolute; left: 0; top: .875rem; bottom: .875rem; width: .1875rem; border-radius: 0 .1875rem .1875rem 0; background: var(--accent-blue); }
+.notif-item .kind { width: 1.875rem; height: 1.875rem; }
+.notif-main { flex: 1; min-width: 0; }
+.notif-row { display: flex; align-items: flex-start; gap: .5rem; }
+.notif-open { flex: 1; min-width: 0; display: block; padding: 0; border: none; background: none; text-align: left; cursor: pointer; }
+div.notif-open { cursor: default; }
+.notif-who { display: flex; align-items: baseline; gap: .5rem; font-size: calc(.78125rem * var(--crm-font-scale, 1)); font-weight: 600; color: var(--text-primary); }
+.notif-who span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.notif-time { margin-left: auto; font-size: calc(.6875rem * var(--crm-font-scale, 1)); font-weight: 400; color: var(--text-muted); white-space: nowrap; }
+.notif-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: .1875rem; font-size: calc(.75rem * var(--crm-font-scale, 1)); line-height: 1.45; color: var(--text-secondary); overflow-wrap: anywhere; }
+.notif-empty { display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: 2.25rem 1.125rem; text-align: center; }
+.notif-empty b { font-size: calc(.8125rem * var(--crm-font-scale, 1)); color: var(--text-primary); }
+.notif-empty span { font-size: calc(.75rem * var(--crm-font-scale, 1)); color: var(--text-muted); }
+
+/* Notification banners: the important alerts, top right under the topbar, for a few seconds each */
+.nb-stack {
+  position: fixed; right: 1rem; top: calc(var(--header-h) + .75rem); z-index: 52; width: 22.5rem;
+  display: flex; flex-direction: column; gap: .5rem; pointer-events: none;
+}
+.nb {
+  display: flex; align-items: center; gap: .75rem; padding: .75rem .625rem .75rem .875rem; pointer-events: auto;
+  background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--kind-fg); border-radius: .75rem; box-shadow: var(--shadow-lg);
+}
+.nb .kind { width: 2rem; height: 2rem; }
+.nb-main { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 0; border: none; background: none; text-align: left; cursor: pointer; }
+.nb-who { display: flex; align-items: baseline; gap: .5rem; font-size: calc(.78125rem * var(--crm-font-scale, 1)); font-weight: 600; color: var(--text-primary); }
+.nb-who span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nb-time { margin-left: auto; font-size: calc(.6875rem * var(--crm-font-scale, 1)); font-weight: 400; color: var(--text-muted); white-space: nowrap; }
+.nb-text { margin-top: .125rem; font-size: calc(.75rem * var(--crm-font-scale, 1)); line-height: 1.4; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nb-x {
+  width: 1.625rem; height: 1.625rem; flex-shrink: 0; align-self: flex-start; display: flex; align-items: center; justify-content: center;
+  padding: 0; border: none; border-radius: 50%; background: none; color: var(--text-muted); cursor: pointer; transition: background .12s, color .12s;
+}
+.nb-x:hover { background: var(--bg-row-hover); color: var(--text-primary); }
+.nb-more {
+  align-self: flex-end; padding: .3125rem .75rem; pointer-events: auto; border: 1px solid var(--border); border-radius: .875rem;
+  background: var(--bg-surface); box-shadow: var(--shadow-sm); font-size: calc(.71875rem * var(--crm-font-scale, 1)); font-weight: 600; color: var(--accent-blue); cursor: pointer;
+}
+.nb-more:hover { background: var(--accent-blue-light); }
+.notif-acts { display: flex; gap: .125rem; flex-shrink: 0; }
+.nicon {
+  width: 1.625rem; height: 1.625rem; padding: 0; border: none; border-radius: 50%; background: none; color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .12s, color .12s;
+}
+.nicon:hover { background: var(--accent-blue-light); color: var(--accent-blue); }
+.quick-reply { display: flex; align-items: center; gap: .375rem; margin-top: .625rem; }
+.quick-reply input {
+  flex: 1; min-width: 0; border: 1px solid var(--border); border-radius: .375rem; padding: .375rem .75rem;
+  font-size: calc(.75rem * var(--crm-font-scale, 1)); background: var(--bg-panel);
+}
+.send-btn {
+  width: 1.75rem; height: 1.75rem; flex-shrink: 0; border-radius: 50%; border: none; background: var(--accent-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .12s;
+}
+.send-btn:hover { background: #3161C0; }
+
+/* Motion: short and calm. It answers something the person did or something new arriving, and only once.
+   Nothing moves for people who ask their computer for less motion. */
+@keyframes rise-in { from { opacity: 0; translate: 0 .25rem; } }
+@keyframes slide-in { from { opacity: 0; translate: .75rem 0; } }
+@keyframes ring-pulse { from { scale: 1; opacity: .55; } to { scale: 1.6; opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } }
+.nb { animation: fade-in 200ms var(--ease) both; }
+@media (prefers-reduced-motion: no-preference) {
+  .is-new { animation: rise-in 220ms var(--ease) both; }
+  .nb { animation: slide-in 260ms var(--ease) both; }
+}
+
+/* Messages: one dark bar, bottom left, like Gmail. It sits above every window (shown as a popover). */
+.toast {
+  inset: auto auto 1.5rem 1.5rem; margin: 0; display: flex; align-items: center; gap: .25rem; min-height: 3rem;
+  max-width: min(35rem, calc(100vw - 3rem)); padding: .375rem .5rem .375rem 1rem; border: none; border-radius: .375rem;
+  background: #323232; color: #fff; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: calc(.875rem * var(--crm-font-scale, 1));
+  box-shadow: 0 .0625rem .1875rem rgba(60,64,67,.3), 0 .25rem .5rem .1875rem rgba(60,64,67,.15); overflow: visible;
+}
+.toast:not(:popover-open) { display: none; }
+.toast:popover-open { animation: fade-in 200ms var(--ease) both; }
+.toast > span { margin-right: .75rem; }
+.toast-btn { height: 2.25rem; padding: 0 .625rem; border: none; border-radius: .25rem; background: none; color: #8AB4F8; font-size: calc(.875rem * var(--crm-font-scale, 1)); font-weight: 500; cursor: pointer; }
+.toast-btn:hover { background: rgba(138,180,248,.12); }
+.toast-x { width: 2.25rem; height: 2.25rem; padding: 0; border: none; border-radius: .25rem; background: none; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.toast-x:hover { background: rgba(255,255,255,.12); }
+@media (prefers-reduced-motion: no-preference) {
+  .toast:popover-open { animation: rise-in 200ms var(--ease) both; }
+}
+
+/* Ask first: the one yes/no window, only for what can't be undone */
+.ask {
+  width: min(25rem, calc(100vw - 2rem)); margin: auto; padding: 0; overflow: hidden;
+  border: 1px solid var(--border); border-radius: .5625rem; background: var(--bg-surface); color: var(--text-primary); box-shadow: var(--shadow-lg);
+}
+.ask::backdrop { background: rgba(30,34,53,.35); }
+.ask-text { padding: 1rem 1.125rem; font-size: calc(.78125rem * var(--crm-font-scale, 1)); line-height: 1.45; color: var(--text-secondary); }
+
+/* Scrollbars: hidden until the mouse rests on one for 1 second (JS adds .scroll-show). The strip you can
+   hover is 8px wide; the bar you see is 4px. Wheel, trackpad and keyboard scrolling always work.
+   .scroll-always keeps a scrollbar showing, for wide tables where columns sit off to the side. */
+@property --thumb { syntax: '<color>'; inherits: true; initial-value: transparent; }
+::-webkit-scrollbar { width: .5rem; height: .5rem; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: var(--thumb); border: 2px solid transparent; border-radius: .25rem; background-clip: padding-box; }
+.scroll-show, .scroll-always { --thumb: var(--border-panel); }
+.scroll-show::-webkit-scrollbar-thumb:hover { background-color: #C0C6D8; }
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-show { animation: scroll-in 150ms var(--ease); }
+  .scroll-hide { animation: scroll-out 150ms var(--ease); }
+}
+@keyframes scroll-in { from { --thumb: transparent; } }
+@keyframes scroll-out { from { --thumb: var(--border-panel); } }
+/* Browsers without the styles above (Firefox): thin, and hidden the same way. */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+  .scroll-show, .scroll-always { scrollbar-color: var(--border-panel) transparent; }
+}
+
+/* Company names stay inert outside Leads; this compact control is the deliberate record action. */
+.open-record { display:inline-flex; align-items:center; justify-content:center; width:1.25rem; height:1.25rem; margin-left:4px; padding:0; border:0; background:none; color:var(--text-muted); cursor:pointer; vertical-align:middle; }
+.open-record:hover, .open-record:focus-visible { color:var(--text-secondary); }
+.open-record .ic { width:.75rem; height:.75rem; }

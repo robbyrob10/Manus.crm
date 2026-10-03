@@ -1,0 +1,153 @@
+/* ── PHONE STATE COLOURS ──
+   Shared by the topbar phone button and the dialer: green ready or in a call, amber ringing or on hold, grey no phone. */
+[data-tone="live"] { --tone: var(--accent-active); }
+[data-tone="wait"] { --tone: var(--accent-amber); }
+[data-tone="off"]  { --tone: var(--text-muted); }
+
+/* ── PHONE BUTTON (topbar) ── the phone icon opens the dialer; the phone name switches phones */
+.phone-ctl {
+  display: flex; height: 1.875rem; margin-right: .875rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--bg-surface);
+}
+.phone-ctl button {
+  display: flex; align-items: center; gap: .375rem; border: none; background: none; cursor: pointer;
+  font-size: calc(.75rem * var(--crm-font-scale, 1)); font-weight: 600; color: var(--text-secondary); transition: background .12s, color .12s;
+}
+.phone-ctl button:hover { background: var(--bg-row-hover); color: var(--text-primary); }
+.phone-ctl-open { padding: 0 .625rem; border-radius: .4375rem 0 0 .4375rem; }
+.phone-ctl-open[aria-expanded="true"] { background: var(--accent-blue-light); color: var(--accent-blue); }
+.phone-ctl .phone-ctl-pick { padding: 0 .625rem 0 .5625rem; border-left: 1px solid var(--border); border-radius: 0 .4375rem .4375rem 0; }
+.phone-ctl-icon { position: relative; display: flex; }
+.phone-ctl-icon .dot {
+  position: absolute; right: -.25rem; bottom: -.1875rem; width: .4375rem; height: .4375rem; border-radius: 50%;
+  background: var(--tone); box-shadow: 0 0 0 2px var(--bg-surface);
+}
+.phone-ctl[data-state="incoming"] .phone-ctl-open { color: var(--tone); }
+.phone-ctl-time { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: calc(.71875rem * var(--crm-font-scale, 1)); font-weight: 500; color: var(--accent-active); }
+.phone-ctl-time:empty { display: none; }
+
+/* ── DIALER ── a dark card (the sidebar colour) over the page, 440px wide; one row while idle.
+   --d-line, --d-fill and --d-hover are the lines, box fills and hover fill on the dark card and its keypad. */
+.dialer {
+  --d-line: rgba(226,230,240,.28); --d-fill: transparent; --d-hover: rgba(255,255,255,.08);
+  position: fixed; left: 0; top: 0; z-index: 70; width: min(380px, calc(100vw - 16px));
+  padding: 10px; background: #1E2235; color: #fff; border: 1px solid #1E2235; border-radius: 14px; box-shadow: var(--shadow-lg);
+  cursor: grab; touch-action: none; user-select: none;
+  opacity: 0; visibility: hidden; transition: opacity 200ms var(--ease), visibility 0s linear 200ms;
+}
+.dialer.open { opacity: 1; visibility: visible; transition: opacity 200ms var(--ease), visibility 0s; }
+.dialer:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
+.dialer.dragging, .dialer.dragging * { cursor: grabbing; }
+.dialer button { cursor: pointer; }
+
+.dialer-main { display: flex; align-items: center; gap: 8px; }
+.dialer-who { flex: 1; min-width: 0; }
+.dialer-name { font-size: calc(.78125rem * var(--crm-font-scale, 1)); font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dialer-sub { display: flex; align-items: baseline; gap: 8px; min-width: 0; margin-top: .0625rem; }
+.dialer-status { min-width: 0; font-size: calc(.6875rem * var(--crm-font-scale, 1)); color: #C8CCDC; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dialer-status.warn, .dialer[data-tone="wait"] .dialer-status { color: var(--accent-amber); }
+.dialer-timer { font-size: calc(.71875rem * var(--crm-font-scale, 1)); font-weight: 500; color: #35C94A; }
+.dialer-timer:empty { display: none; }
+.dialer[data-state="active"] .dialer-status,
+.dialer[data-state="dialing"] .dialer-status,
+.dialer[data-state="active"] .dial-keypad,
+.dialer[data-state="dialing"] .dial-keypad { display: none; }
+
+.dial-keypad {
+  width: 1.75rem; height: 1.75rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  border: 0; border-radius: 8px; background: none; color: #C8CCDC;
+}
+.dial-keypad:hover { background: none; color: #fff; }
+.dial-keypad.active { border: 0; background: none; color: #fff; }
+.dialer-input {
+  width: 12ch; flex: 0 0 auto; height: 1.625rem; padding: 0 6px; border: 1px solid #C97B2A; border-radius: 8px;
+  background: #07130B; color: #35C94A; -webkit-text-fill-color: #35C94A; opacity: 1;
+  font-family: var(--font); font-size: calc(.75rem * var(--crm-font-scale, 1)); font-weight: 700; letter-spacing: 0;
+}
+.dialer-input:focus { background: #0B1B10; border-color: rgba(53,201,74,.7); color: #35C94A; }
+.dialer-input:disabled, .dialer-input[readonly] { color: #35C94A; opacity: 1; -webkit-text-fill-color: #35C94A; }
+.dialer-input::placeholder { color: var(--text-muted); }
+.dialer[data-state="incoming"] :is(.dialer-input, .dial-keypad) { display: none; }
+
+/* The round call button: green Call or Answer, red End or Decline. It turns from one to the other in place. */
+.dial-circle {
+  width: 1.75rem; height: 1.75rem; flex-shrink: 0; border: none; border-radius: 50%; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  background: #35C94A; box-shadow: 0 2px 8px rgba(53,201,74,.32);
+  transition: background .2s var(--ease), box-shadow .2s var(--ease), transform .1s;
+}
+.dial-circle:hover { background: #1DAF6B; transform: scale(1.06); }
+.dial-circle:active { transform: scale(.95); }
+.dial-circle.end { background: var(--accent-red); box-shadow: 0 2px 8px rgba(196,59,59,.35); }
+.dial-circle.end:hover { background: #A83030; }
+.dial-circle .ic { transition: transform .25s var(--ease); }
+.dial-circle.end .ic { transform: rotate(135deg); }
+.dial-circle[hidden] { display: none; }
+
+/* Minimize: small and faint until the mouse is on it */
+.dialer-min {
+  width: 1.25rem; height: 1.25rem; flex-shrink: 0; margin-left: auto; display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 50%; background: none; color: #C8CCDC; transition: color .12s;
+}
+.dialer-min:hover { background: none; color: #fff; }
+.dialer-min .ic { width: .5625rem; height: .5625rem; }
+
+/* The call controls fold open below the first row during a call */
+.dial-fold { display: grid; grid-template-rows: 0fr; opacity: 0; }
+.dial-fold.open { grid-template-rows: 1fr; opacity: 1; }
+.dial-fold > div { min-height: 0; overflow: hidden; }
+.dial-ctrls { display: flex; gap: .125rem; margin-top: .25rem; padding-top: .25rem; border-top: 1px solid var(--d-line); }
+.dial-ctrl {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: .0625rem; padding: .0625rem 0;
+  border: none; border-radius: 8px; background: none; color: #C8CCDC; transition: background .12s, color .12s;
+}
+.dial-ctrl:hover { background: rgba(255,255,255,.06); color: #fff; }
+.dial-icon {
+  width: 1.25rem; height: 1.125rem; display: flex; align-items: center; justify-content: center;
+  border: 0; border-radius: 8px; background: none; transition: color .12s;
+}
+.dial-ctrl.active { color: #fff; }
+.dial-ctrl.active .dial-icon { border-color: var(--accent-blue); background: rgba(59,111,212,.35); }
+.dial-ctrl-label { font-size: calc(.59375rem * var(--crm-font-scale, 1)); font-weight: 600; }
+
+/* The keypad: a small box of just the keys, under the dialer and lined up with its button (left is set by
+   dialer. With no room below it opens above (.up). */
+.keypad {
+  position: absolute; top: calc(100% + 8px); left: 0; display: grid; grid-template-columns: repeat(3, 3rem); gap: 8px; padding: 8px;
+  background: var(--bg-sidebar); border-radius: .75rem; box-shadow: var(--shadow-lg);
+  opacity: 0; visibility: hidden; transition: opacity 160ms var(--ease), visibility 0s linear 160ms;
+}
+.keypad.up { top: auto; bottom: calc(100% + .375rem); }
+.keypad.open { opacity: 1; visibility: visible; transition: opacity 160ms var(--ease), visibility 0s; }
+.key-btn {
+  height: 2rem; border: 0; border-radius: 8px; background: rgba(255,255,255,.06); user-select: none;
+  font-size: calc(.8125rem * var(--crm-font-scale, 1)); font-weight: 500; color: #fff;
+  transition: background .1s, color .1s;
+}
+.key-btn:hover { background: var(--d-hover); }
+.key-btn:active { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+
+/* Motion: the dialer slides in a little as it opens, the call controls fold smoothly, the keypad slides a little
+   toward where it opens, and a ringing call pulses.
+   With less motion asked for, the dialer only fades and nothing pulses. */
+@keyframes pop-in { from { opacity: 0; scale: .6; } }
+@media (prefers-reduced-motion: no-preference) {
+  .dialer { translate: .75rem 0; transition: opacity 240ms var(--ease), translate 240ms var(--ease), visibility 0s linear 240ms; }
+  .dialer.open { translate: none; transition: opacity 240ms var(--ease), translate 240ms var(--ease), visibility 0s; }
+  .dial-fold { transition: grid-template-rows 240ms var(--ease), opacity 240ms var(--ease); }
+  .keypad { translate: 0 -.25rem; transition: opacity 160ms var(--ease), translate 160ms var(--ease), visibility 0s linear 160ms; }
+  .keypad.up { translate: 0 .25rem; }
+  .keypad.open { translate: none; transition: opacity 160ms var(--ease), translate 160ms var(--ease), visibility 0s; }
+  #declineBtn { animation: pop-in 180ms var(--ease); }
+  [data-state="incoming"] .phone-ctl-icon::after {
+    content: ''; position: absolute; inset: -.1875rem; border-radius: 50%; border: 2px solid var(--tone);
+    animation: ring-pulse 1.4s var(--ease) infinite;
+  }
+}
+@media (max-width: 42rem) {
+  .dialer { width: calc(100vw - 1rem); max-width: calc(100vw - 1rem); padding-inline: .625rem; }
+  .dialer-main { gap: .375rem; }
+  .dialer-who { min-width: 0; }
+  .dialer-input { flex: 0 0 auto; min-width: 0; width: auto; }
+  .dial-circle { width: 1.9375rem; height: 1.9375rem; }
+}
+html.still :is(.dialer, .dial-fold, .keypad) { transition: none; }

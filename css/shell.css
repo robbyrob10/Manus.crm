@@ -1,0 +1,107 @@
+/* ── LAYOUT SHELL ── */
+.app {
+  display: flex; height: 100dvh; flex-direction: column; overflow: hidden;
+  gap: var(--panel-gap); padding: var(--panel-gap); background: var(--bg-page);
+}
+
+/* The top bar is its own panel. The dialer can be dragged over it. */
+.topbar {
+  height: var(--header-h); background: var(--bg-surface);
+  border: 1px solid var(--line); border-radius: 16px; display: flex;
+  align-items: center; padding: 0 1.25rem; gap: 8px;
+  position: relative; z-index: 53; flex-shrink: 0;
+  box-shadow: none;
+}
+.topbar-logo {
+  display: flex; align-items: center; gap: .4375rem; flex-shrink: 0; width: auto; padding-left: 0;
+  border: none; background: none; overflow: hidden; white-space: nowrap; cursor: pointer;
+  font-size: calc(.9375rem * var(--crm-font-scale, 1)); font-weight: 700; letter-spacing: -.025rem; color: var(--accent-blue);
+}
+.topbar-logo:focus-visible { outline-offset: -2px; }
+.topbar-logo svg { flex-shrink: 0; opacity: .85; }
+.topbar-search { flex: 0 1 20rem; width: min(20rem, 30vw); max-width: 20rem; margin-left: 1.5rem; position: relative; }
+.topbar-search input {
+  width: 100%; padding: .375rem .75rem .375rem 2.125rem; border-radius: .4375rem;
+  border: 1px solid var(--border); background: var(--bg-panel);
+  font-size: calc(.78125rem * var(--crm-font-scale, 1)); color: var(--text-primary);
+}
+.topbar-search .search-icon {
+  position: absolute; left: .625rem; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); pointer-events: none;
+}
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: .875rem; }
+.work-seg { visibility: visible; }
+.topbar-btn {
+  background: none; border: none; cursor: pointer; color: var(--text-secondary);
+  padding: .3125rem; border-radius: .375rem; display: flex; align-items: center;
+  transition: background .12s, color .12s;
+}
+.topbar-btn:hover { background: var(--bg-row-hover); color: var(--text-primary); }
+/* Clock: far right, set well apart from the bell. */
+.topbar-clock {
+  display: flex; flex-direction: column; align-items: flex-end; margin-left: .875rem;
+  line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.clock-time { font-size: calc(.8125rem * var(--crm-font-scale, 1)); font-weight: 600; color: var(--text-primary); }
+.clock-date { font-size: calc(.6875rem * var(--crm-font-scale, 1)); color: var(--text-muted); }
+
+.body-area { display: flex; flex: 1; min-height: 0; overflow: hidden; gap: var(--panel-gap); padding: 0; background: transparent; }
+.body-area > :not(.sidebar) { flex: 1; min-width: 0; margin: 0; }
+/* One gap for the whole CRM: pages, panels, and cards stay 8px apart. */
+.workspace,
+.mail-page,
+.db-page,
+.sc-page,
+.cp-page,
+.detail-body,
+.info-pair,
+.section-pair,
+.gm-body,
+.cp-board,
+.db-sections { gap: var(--panel-gap); }
+.sidebar {
+  width: var(--sidebar-w); background: var(--bg-sidebar); flex: 0 0 var(--sidebar-w);
+  display: flex; flex-direction: column; overflow: hidden; transition: width .2s var(--ease);
+  border-radius: 16px; margin: 0;
+}
+/* Icons only: the sidebar narrows to its icon column and the names are cut off. */
+html[data-nav="small"] { --sidebar-w: var(--sidebar-small); }
+html[data-nav="small"] .nav-item { justify-content: center; gap: 0; padding-inline: 0; overflow: visible; }
+html[data-nav="small"] .nav-item .nav-label,
+html[data-nav="small"] .sidebar-user-text { display: none; }
+html[data-nav="small"] .nav-item svg { margin: 0; }
+/* Settings › List spacing (VIEW) */
+html[data-lists="comfortable"] { --list-pad: .875rem; }
+html[data-lists="compact"] { --list-pad: .375rem; }
+html[data-nav="small"] .sidebar-section-label { visibility: hidden; }
+.nav-label, .topbar-logo span, .sidebar-user-text, .sidebar-status-dot { transition: opacity .15s; }
+html[data-nav="small"] :is(.nav-label, .sidebar-user-text, .sidebar-status-dot) { opacity: 0; }
+html[data-nav="small"] .sidebar-footer { padding-inline: .875rem; }
+.sidebar-section-label {
+  font-size: calc(.59375rem * var(--crm-font-scale, 1)); font-weight: 700; letter-spacing: .06875rem;
+  color: #4A5070; text-transform: uppercase; padding: 1.25rem 1.125rem .375rem;
+}
+.nav-item {
+  position: relative; display: flex; align-items: center; gap: .75rem; width: 100%; padding: .6875rem 1.125rem;
+  border: none; border-left: 3px solid transparent; background: none; text-align: left; white-space: nowrap;
+  color: var(--text-sidebar); font-size: calc(.78125rem * var(--crm-font-scale, 1)); font-weight: 500;
+}
+button.nav-item { cursor: pointer; transition: background .12s, color .12s; }
+button.nav-item:hover { background: rgba(255,255,255,.05); color: #fff; }
+.nav-item.active {
+  background: rgba(59,111,212,.18); color: var(--text-sidebar-active);
+  border-left-color: var(--accent-blue);
+}
+.nav-item svg { width: 1.25rem; height: 1.25rem; flex: 0 0 1.25rem; opacity: .75; }
+.nav-item.active svg { opacity: 1; }
+.sidebar-footer { margin-top: auto; padding: .875rem 1.125rem 1.125rem; border-top: 1px solid rgba(255,255,255,.07); transition: padding .2s var(--ease); }
+.sidebar-user {
+  display: flex; align-items: center; gap: .5625rem; width: calc(100% + 1rem); margin: -.375rem -.5rem; padding: .375rem .5rem;
+  border: none; border-radius: .375rem; background: none; line-height: inherit; text-align: left; white-space: nowrap; overflow: hidden;
+  cursor: pointer; transition: background .12s;
+}
+.sidebar-user:hover { background: rgba(255,255,255,.05); }
+.sidebar-user-avatar { display: flex; }
+.sidebar-user-name { display: block; font-size: calc(.75rem * var(--crm-font-scale, 1)); font-weight: 600; color: var(--text-sidebar-active); }
+.sidebar-user-role { display: block; font-size: calc(.65625rem * var(--crm-font-scale, 1)); color: #5A6080; }
+.sidebar-status-dot { width: .4375rem; height: .4375rem; border-radius: 50%; background: var(--accent-active); margin-left: auto; }

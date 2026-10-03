@@ -1,0 +1,2193 @@
+/* CRM visual refinement layer
+   Keeps the original component styles intact while fixing the highest-impact review findings. */
+
+:root {
+  --border-strong: #D6DCE8;
+  --text-readable: #4A5261;
+}
+
+/* Readability floor: reserve micro type for timestamps and badges only. */
+.panel-title,
+.db-row-company,
+.lead-company,
+.cp-channel h2,
+.al-day-name,
+.al-row-main,
+.sc-strip-name { font-size: max(0.8125rem, 0.8125rem * var(--crm-font-scale, 1)); }
+
+.lead-contact,
+.lead-revenue,
+.db-row-meta,
+.cp-field p,
+.cp-line,
+.feed-text,
+.al-row,
+.sc-set,
+.sc-stats,
+.sc-empty,
+.cp-empty { font-size: max(0.75rem, 0.75rem * var(--crm-font-scale, 1)); }
+
+.section-title,
+.db-section-title,
+.cp-field h3,
+.fact-label,
+.feed-group,
+.sc-batch,
+.sc-lanes,
+.al-strip-who span,
+.al-metrics span { color: var(--text-readable); }
+
+/* Make dense cards feel more intentional and reduce accidental text collisions. */
+.panel,
+.db-section,
+.cp-channel,
+.gm-card { border-color: var(--border-strong); }
+
+.detail-name { max-width: 100%; }
+.detail-body .section-card { overflow-wrap: anywhere; }
+.contact-groups { min-width: 0; }
+.email-list .link-btn,
+.contact-list .link-btn { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+
+/* Notifications should be opaque, compact, and clearly separate from content. */
+.nb-stack { width: min(20rem, calc(100vw - 2rem)); top: calc(var(--header-h) + .5rem); right: .75rem; }
+.nb { background: #FFFFFF; border-color: var(--border-strong); box-shadow: 0 .5rem 1.25rem rgba(30,34,53,.16); }
+.notif-menu { border-color: var(--border-strong); }
+
+/* Medium desktop: protect the information-dense center panel. */
+@media (max-width: 80rem) {
+  .panel-leads { flex-basis: 22vw; }
+  .panel-comms { flex-basis: 25vw; }
+  .contact-groups,
+  .email-list { grid-template-columns: 1fr; }
+  .contact-group.wide { grid-column: auto; }
+  .db-stat-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Tablet/mobile: use a real fluid canvas rather than preserving a cropped desktop width. */
+@media (max-width: 64rem) {
+  html, body { overflow: auto; }
+  .app,
+  .body-area { min-width: 0; width: 100%; }
+  .app { height: auto; min-height: 100dvh; overflow: visible; padding: .5rem; gap: .5rem; }
+  .body-area { overflow: visible; gap: .5rem; }
+
+  .topbar { min-height: 3.25rem; height: auto; padding: .5rem .75rem; gap: .5rem; }
+  .topbar-search { flex: 1 1 auto; width: auto; max-width: none; margin-left: .25rem; }
+  .topbar-right { gap: .375rem; }
+  .work-seg,
+  .phone-ctl-time,
+  .phone-ctl-pick,
+  .topbar-clock { display: none; }
+  .topbar-logo { font-size: .875rem; }
+
+  /* Keep page navigation available as a compact icon rail. */
+  .sidebar { width: var(--sidebar-small); flex-basis: var(--sidebar-small); border-radius: 12px; }
+  .sidebar-section-label { visibility: hidden; height: 1.5rem; padding: 0; }
+  .nav-item { justify-content: center; gap: 0; padding-inline: 0; }
+  .nav-item .nav-label {
+    display: block; position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .sidebar-user-text,
+  .sidebar-status-dot { display: none; }
+  .nav-item svg { margin: 0; }
+  .sidebar-footer { padding-inline: .75rem; }
+  .sidebar-user { width: auto; margin: 0; padding: .375rem; }
+
+  .workspace,
+  .mail-page,
+  .db-page,
+  .sc-page,
+  .cp-page { min-width: 0; width: 100%; }
+
+  /* Leads becomes a readable vertical workflow. */
+  #leadsPage.workspace { flex-direction: column; overflow: visible; gap: .5rem; }
+  #leadsPage .resizer { display: none; }
+  #leadsPage .panel-leads,
+  #leadsPage .panel-detail,
+  #leadsPage .panel-comms { flex: 0 0 auto; width: 100%; min-width: 0; }
+  #leadsPage .panel-leads { height: 15rem; }
+  #leadsPage .panel-detail { min-height: 34rem; }
+  #leadsPage .panel-comms { min-height: 28rem; }
+  #leadsPage .lead-list { overflow: auto; }
+  #leadsPage .detail-body { overflow: visible; }
+  #leadsPage .detail { overflow: visible; }
+  #leadsPage .section-card { height: auto; max-height: none; overflow: visible; }
+  #leadsPage .comms { min-height: 24rem; }
+
+  /* Dashboard becomes a single clear stream. */
+  .db-page { overflow: visible; padding: .25rem 0; }
+  .db-stats { grid-template-columns: 1fr; }
+  .db-sections { display: flex; flex-direction: column; overflow: visible; }
+  .db-section,
+  .db-section[data-tone="team"] { flex: 0 0 auto; max-height: none; }
+  .db-grid { overflow: visible; }
+
+  /* Full-width operational views. */
+  .sc-page,
+  .cp-page { overflow: visible; padding: .25rem 0; }
+  .sc-settings { align-items: stretch; }
+  .sc-history { margin-left: 0; }
+  .sc-results { min-height: 22rem; }
+  .cp-board { grid-template-columns: 1fr; }
+  .cp-channel { min-height: 0; }
+  .cp-top { flex-wrap: wrap; }
+  .cp-steps { order: 3; flex-basis: 100%; overflow-x: auto; padding-top: .25rem; }
+  .cp-sum { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Activity Log stacks its two work areas. */
+  #logPage.workspace { flex-direction: column; overflow: visible; gap: .5rem; }
+  #logPage .al-team,
+  #logPage .al-time { flex: 0 0 auto; width: 100%; min-width: 0; min-height: 17rem; }
+  #logPage .al-team .al-scroll { overflow: auto; }
+  #logPage .al-week { max-height: none; }
+
+  .nb-stack { top: auto; bottom: .5rem; right: .5rem; width: min(18rem, calc(100vw - 1rem)); }
+  .nb-stack .nb { max-height: 3.25rem; padding: .5rem; gap: .5rem; overflow: hidden; }
+  .nb-stack .nb .kind { width: 1.5rem; height: 1.5rem; }
+  .nb-stack .nb-text { display: none; }
+  .toast { inset: auto .75rem .75rem .75rem; max-width: none; }
+}
+
+@media (max-width: 42rem) {
+  .app { padding: .375rem; gap: .375rem; }
+  .body-area { gap: .375rem; }
+  .topbar { padding-inline: .625rem; }
+  .topbar-logo span { display: none; }
+  .topbar-search input { font-size: .75rem; }
+  .panel,
+  .db-section,
+  .cp-channel,
+  .gm-card { border-radius: 12px; }
+  .panel-head { padding-inline: .75rem; }
+  .detail-head { padding: 8px; }
+  .section-card { padding: 8px; }
+  .db-section { padding: 8px; }
+  .cp-channel { padding: 8px; }
+  .cp-sum { grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .sc-settings { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .sc-set { min-width: 0; align-items: flex-start; flex-direction: column; gap: .25rem; }
+  .sc-set input { width: 100%; }
+  .sc-set .sc-money-in { width: 100%; }
+  .sc-history { grid-column: 1 / -1; }
+  .nb-stack { left: .5rem; width: auto; }
+}
+
+/* ── Phase 1: shared shell, surfaces, notifications ── */
+:root {
+  --border-strong: #D6DCE8;
+  --text-readable: #4A5261;
+}
+.topbar {
+  background: #FFFFFF;
+  border-color: transparent;
+  border-bottom-color: #D6DCE8;
+}
+.topbar-search input {
+  background: #F7F8FC;
+  border-color: #E9EDF4;
+  border-radius: 8px;
+}
+.topbar-btn {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 8px;
+  color: #626B7C;
+}
+.topbar-btn:hover,
+.topbar-btn:focus-visible,
+.topbar-btn[aria-expanded="true"] {
+  background: #EAF0FF;
+  color: #315EA8;
+}
+.phone-ctl {
+  height: 36px;
+  margin-right: .25rem;
+  border-color: #D6DCE8;
+  border-radius: 8px;
+}
+.phone-ctl-open { border-radius: 7px 0 0 7px; }
+.phone-ctl .phone-ctl-pick { border-radius: 0 7px 7px 0; }
+.notif-badge {
+  top: 1px;
+  right: 0;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  border: 1px solid #FFFFFF;
+  border-radius: 4px;
+  background: #EAF0FF;
+  color: #315EA8;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 12px;
+}
+.notif-menu {
+  width: min(25rem, calc(100vw - 1rem));
+  border-color: #D6DCE8;
+  border-radius: 12px;
+  background: #FFFFFF;
+  box-shadow: 0 12px 32px rgba(30,34,53,.14);
+}
+.notif-head { border-bottom-color: #EDF0F5; }
+.notif-count {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #6D7687;
+  font-size: .75rem;
+  font-weight: 500;
+}
+.notif-item { border-bottom-color: #EDF0F5; }
+.notif-item.unread { background: #F7F9FF; }
+.notif-item.unread::before { width: 2px; border-radius: 0; }
+.nb-stack { width: min(22rem, calc(100vw - 1rem)); }
+.nb {
+  border-color: #D6DCE8;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(30,34,53,.12);
+}
+.nb-more {
+  min-height: 36px;
+  padding: 0 .5rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+  color: #315EA8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.nb-more:hover { background: #EAF0FF; }
+
+/* ── Phase 2: lead prioritization, shared record surfaces, communication stream ── */
+.panel { border-color: #D6DCE8; }
+.panel-head { border-bottom-color: #EDF0F5; }
+.panel-title { color: #293247; }
+.panel-count {
+  border: 0;
+  background: #EEF2F8;
+  color: #5A6476;
+  font-size: .71875rem;
+}
+.lead-row {
+  position: relative;
+  border-bottom-color: #EDF0F5;
+  transition: background-color .12s ease;
+}
+.lead-row.selected { background: #EAF0FF; }
+.lead-row.selected::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: #3B6FD4;
+  content: "";
+}
+.lead-company { font-size: max(.875rem, .875rem * var(--crm-font-scale, 1)); font-weight: 600; color: #293247; }
+.lead-revenue { font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1)); font-weight: 600; color: #293247; }
+.lead-contact { font-size: max(.78125rem, .78125rem * var(--crm-font-scale, 1)); color: #5A6476; }
+.lead-ago { font-size: max(.6875rem, .6875rem * var(--crm-font-scale, 1)); color: #788194; }
+.panel-tools .icon-btn,
+.comms-head .icon-btn {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: #697386;
+}
+.panel-tools .icon-btn:hover,
+.comms-head .icon-btn:hover,
+.panel-tools .icon-btn:focus-visible,
+.comms-head .icon-btn:focus-visible,
+.panel-tools .icon-btn.on {
+  background: #EAF0FF;
+  color: #315EA8;
+}
+.lead-options { position: relative; }
+.lead-options > summary { list-style: none; cursor: pointer; }
+.lead-options > summary::-webkit-details-marker { display: none; }
+.lead-options[open] > summary { background: #EAF0FF; color: #315EA8; }
+.lead-options-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  right: 0;
+  display: grid;
+  gap: 10px;
+  width: min(250px, calc(100vw - 32px));
+  padding: 12px;
+  border: 1px solid #D6DCE8;
+  border-radius: 12px;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px rgba(30,34,53,.14);
+}
+.lead-options-menu label {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  color: #596477;
+  font-size: .8125rem;
+  font-weight: 500;
+}
+.lead-options-menu select {
+  min-width: 0;
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid #D6DCE8;
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: #293247;
+  font: inherit;
+  font-weight: 500;
+}
+.lead-options-menu select:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+.detail-head { border-color: #D6DCE8; }
+.detail-name { color: #293247; font-weight: 600; }
+.detail-sub { color: #667084; }
+.detail-body .section-card {
+  border-color: #E6EAF1;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.section-card > .section-title {
+  border-bottom-color: #EDF0F5;
+  color: #465166;
+}
+.section-title {
+  font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1));
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.section-title { justify-content: flex-start; gap: 7px; }
+.section-title > .save-state { margin-left: auto; }
+.section-title-icon { flex: 0 0 auto; color: #7A8799; stroke-width: 1.8; }
+.fact-label { font-size: max(.6875rem, .6875rem * var(--crm-font-scale, 1)); color: #788194; }
+.fact-val { font-size: max(.875rem, .875rem * var(--crm-font-scale, 1)); font-weight: 600; color: #293247; }
+.detail-body .fact-val,
+.detail-body .stmt td,
+.detail-body .mono { color: #293247; font-weight: 600; }
+.detail-body .contact-value { font-weight: 600; }
+.contact-info-section .contact-groups {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+  row-gap: 12px;
+}
+.contact-info-section .contact-group.wide { grid-column: 1 / -1; }
+.contact-info-section .email-list { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+.contact-info-section .contact-list,
+.contact-info-section .email-list { gap: 8px; }
+.contact-info-section .contact-list .link-btn,
+.contact-info-section .email-list .link-btn {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  text-decoration: none;
+}
+.contact-info-section .contact-list .link-btn:hover,
+.contact-info-section .email-list .link-btn:hover { text-decoration: underline; }
+.acts { gap: 7px; }
+.act-btn {
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--act-soft);
+  color: var(--act-ink);
+  box-shadow: none;
+  transition: background-color .14s ease, color .14s ease, border-color .14s ease;
+}
+.act-btn.call { --act-ink: #146B61; --act-soft: #E6F4F1; --act-strong: #146B61; color: var(--act-ink); background: var(--act-soft); }
+.act-btn.sms { --act-ink: #315EA8; --act-soft: #EAF0FF; --act-strong: #315EA8; color: var(--act-ink); background: var(--act-soft); }
+.act-btn.wa { --act-ink: #267044; --act-soft: #E8F4EC; --act-strong: #267044; color: var(--act-ink); background: var(--act-soft); }
+.act-btn.email { --act-ink: #5B5799; --act-soft: #F0EFF9; --act-strong: #5B5799; color: var(--act-ink); background: var(--act-soft); }
+.act-btn:hover,
+.act-btn:focus-visible {
+  border-color: var(--act-strong);
+  background: var(--act-strong);
+  color: #FFFFFF;
+  filter: none;
+}
+.lead-row.selected > .avatar:not(:has(img)) { background: #DDE7F7; color: #315EA8; }
+.summary { color: #4A5261; font-weight: 400; line-height: 1.55; }
+.feed-group { font-size: max(.75rem, .75rem * var(--crm-font-scale, 1)); color: #667084; }
+.feed-item { border-bottom: 1px solid #F1F3F7; }
+.feed-text { color: #3E4758; font-weight: 500; }
+.feed-sub { font-size: max(.6875rem, .6875rem * var(--crm-font-scale, 1)); color: #788194; }
+
+/* Tabs remain a tablist; Contacts and Dialer are adjacent utilities, not tabs. */
+.comms-head { gap: 4px; padding-inline: 6px; }
+.comms-tabs {
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 0;
+  height: 100%;
+  padding: 0;
+  justify-content: flex-start;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.comms-tabs::-webkit-scrollbar { display: none; }
+.comms-tabs .tab-btn {
+  position: relative;
+  flex: 0 0 auto;
+  gap: 3px;
+  height: 100%;
+  min-width: 38px;
+  padding: 0 7px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: #697386;
+  font-size: max(.75rem, .75rem * var(--crm-font-scale, 1));
+  font-weight: 500;
+  white-space: nowrap;
+}
+.comms-tabs .tab-btn:hover { background: #F4F7FC; color: #293247; }
+.comms-tabs .tab-btn.active {
+  border-bottom-color: #3B6FD4;
+  background: transparent;
+  color: #315EA8;
+  font-weight: 600;
+}
+.comms-tabs .tab-badge {
+  position: static;
+  min-width: 15px;
+  width: auto;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: #EEF2F8;
+  color: #596477;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 15px;
+}
+.comms-tabs .tab-btn.active .tab-badge { background: #EAF0FF; color: #315EA8; }
+.comms-head .panel-tools { flex: 0 0 auto; gap: 0; margin-left: 2px; }
+#commsBody .ios-row,
+#commsBody .wa-row { border-bottom-color: #EDF0F5; }
+#commsBody .ios-row:has(.unread-dot),
+#commsBody .wa-row:has(.wa-badge) { background: #F7F9FF; box-shadow: inset 2px 0 #6A8EE2; }
+#commsBody .ios-row:has(.unread-dot) .ios-name,
+#commsBody .wa-row:has(.wa-badge) .wa-name { color: #27334A; font-weight: 700; }
+#commsBody .ios-row:has(.unread-dot) .ios-preview,
+#commsBody .wa-row:has(.wa-badge) .wa-preview { color: #596477; }
+#commsBody .ios-name { font-size: max(.875rem, .875rem * var(--crm-font-scale, 1)); font-weight: 600; color: #30394B; }
+#commsBody .ios-time { font-size: max(.71875rem, .71875rem * var(--crm-font-scale, 1)); color: #788194; }
+#commsBody .ios-preview { font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1)); color: #596477; }
+#commsBody .ios-meta { font-size: max(.6875rem, .6875rem * var(--crm-font-scale, 1)); color: #788194; }
+#commsBody .ios-row[data-open-call] { padding-block: .5rem; }
+#commsBody .ios-row[data-open-mail] { padding-block: .75rem; }
+#commsBody .wa-name { font-weight: 600; color: #30394B; }
+#commsBody .wa-preview { color: #596477; }
+
+@media (max-width: 80rem) {
+  .comms-tabs .tab-btn { padding-inline: 5px; }
+}
+@media (max-width: 42rem) {
+  .topbar-btn { width: 36px; min-width: 36px; height: 36px; }
+  .lead-options-menu { right: -42px; }
+  .comms-head { padding-inline: 4px; }
+  .comms-tabs .tab-btn { padding-inline: 6px; }
+}
+@media (max-width: 22rem) {
+  .contact-info-section .contact-groups { grid-template-columns: minmax(0, 1fr); }
+  .contact-info-section .contact-group.wide { grid-column: auto; }
+}
+
+/* Keep the full Contacts list readable in the center panel; scroll the record as one coherent surface. */
+.detail-body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.info-pair {
+  flex: 0 0 auto;
+  min-height: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.info-pair > .section-card {
+  height: auto;
+  min-height: 0;
+}
+.section-pair { flex: 0 0 auto; min-height: 0; }
+.section-pair > .section-card { height: auto; min-height: 0; }
+@media (max-width: 64rem) {
+  #leadsPage .detail-body { overflow-x: hidden; overflow-y: auto; }
+  #leadsPage .info-pair > .section-card,
+  #leadsPage .section-pair > .section-card { height: auto; min-height: 0; }
+}
+@media (max-width: 42rem) {
+  .info-pair { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── Campaign: keep the workflow visible and tuck infrequent actions into More ── */
+.cp-page { overflow: visible; background: transparent; }
+.cp-top {
+  position: relative;
+  z-index: 3;
+  overflow: visible;
+  min-height: 44px;
+  gap: 8px;
+  padding: 6px 10px;
+  border-color: #D6DCE8;
+  border-radius: 12px;
+  background: #F7F8FC;
+}
+.cp-name {
+  min-height: 36px;
+  padding: 0 9px;
+  border: 1px solid #E1E6EF;
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: #293247;
+}
+.cp-name:hover { border-color: #C9D2E1; }
+.cp-name:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 1px; }
+.cp-steps { gap: 0; padding: 2px 0; }
+.cp-steps li::before { color: #A6AFBE; }
+.cp-steps li[data-step-state="complete"]::after,
+.cp-steps li[data-step-state="complete"] button { color: #237763; }
+.cp-steps li[data-step-state="future"]::after,
+.cp-steps li[data-step-state="future"] { color: #8993A4; }
+.cp-steps li[data-step-state="current"]::after { color: #315EA8; }
+.cp-steps [aria-current="step"] {
+  color: #315EA8;
+  box-shadow: inset 0 -2px #3B6FD4;
+}
+.cp-steps button:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+.cp-more { position: relative; flex: 0 0 auto; }
+.cp-more > summary { list-style: none; cursor: pointer; }
+.cp-more > summary::-webkit-details-marker { display: none; }
+.cp-more-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 72px;
+  height: 36px;
+  padding: 0 9px;
+  border: 1px solid #D6DCE8;
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: #536075;
+  font-size: .8125rem;
+  font-weight: 500;
+}
+.cp-more-trigger:hover,
+.cp-more-trigger:focus-visible,
+.cp-more[open] .cp-more-trigger { border-color: #AFC2E9; background: #EAF0FF; color: #315EA8; }
+.cp-more-trigger:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+.cp-more-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  right: 0;
+  display: grid;
+  gap: 2px;
+  min-width: 190px;
+  padding: 5px;
+  border: 1px solid #D6DCE8;
+  border-radius: 10px;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px rgba(30,34,53,.14);
+}
+.cp-more-item {
+  min-height: 36px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #3F4A5D;
+  font: inherit;
+  font-size: .8125rem;
+  text-align: left;
+  cursor: pointer;
+}
+.cp-more-item:hover,
+.cp-more-item:focus-visible { outline: none; background: #F2F5FA; color: #315EA8; }
+.cp-more-item:focus-visible { box-shadow: inset 0 0 0 2px #3B6FD4; }
+.cp-page > .cp-filters,
+.cp-filters {
+  border-color: #D6DCE8;
+  border-radius: 10px;
+  background: #F7F8FC;
+}
+.cp-select,
+.cp-select select,
+.cp-filters .input { border-radius: 7px; }
+.cp-select { min-height: 36px; background: #FFFFFF; }
+.cp-filters .input { min-height: 36px; border-color: #D6DCE8; background: #FFFFFF; }
+.cp-list,
+.cp-card { border-color: #D6DCE8; border-radius: 12px; box-shadow: none; }
+.cp-channel { border-color: #D6DCE8; border-radius: 12px; background: #FFFFFF; }
+.cp-channel[data-channel="email"] { border-top: 2px solid #756DB4; }
+.cp-channel[data-channel="sms"] { border-top: 2px solid #4D82C8; }
+.cp-channel h2 { font-weight: 600; color: #293247; text-transform: none; }
+.cp-field h3 { font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1)); color: #465166; text-transform: none; letter-spacing: 0; }
+.cp-table th {
+  background: #F7F8FC;
+  border-bottom-color: #EDF0F5;
+  color: #687386;
+  font-size: .71875rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.cp-table td { border-bottom-color: #EDF0F5; }
+.cp-counts button[aria-pressed="true"] { border-radius: 6px; background: #EAF0FF; color: #315EA8; }
+.cp-drawer { border-left-color: #D6DCE8; border-radius: 12px 0 0 12px; background: #FFFFFF; }
+.cp-menu { border-color: #D6DCE8; border-radius: 10px; background: #FFFFFF; box-shadow: 0 10px 28px rgba(30,34,53,.14); }
+
+/* ── Activity Log: quiet summary panels, focused filters, scannable timeline ── */
+#logPage .al-team,
+#logPage .al-time {
+  position: relative;
+  border: 1px solid #D6DCE8;
+  border-radius: 16px;
+  background: #FFFFFF;
+}
+#logPage .al-team { overflow: visible; }
+#logPage .al-time { overflow: hidden; }
+#logPage .al-team .panel-head,
+#logPage .al-time .panel-head {
+  min-height: 44px;
+  border-bottom: 1px solid #EDF0F5;
+  background: #F7F8FC;
+}
+#logPage .al-team .panel-head { position: relative; z-index: 2; overflow: visible; }
+#logPage .panel-title { color: #293247; font-size: .875rem; font-weight: 600; }
+.al-tools { gap: 6px; }
+#logPage .seg { gap: 2px; padding: 2px; border-radius: 8px; background: #EEF1F6; }
+#logPage .seg button { min-height: 32px; padding: 0 9px; border-radius: 6px; }
+#logPage .seg button[aria-checked="true"] { background: #FFFFFF; color: #315EA8; box-shadow: 0 1px 2px rgba(30,34,53,.08); }
+.al-search { width: clamp(8rem, 17vw, 13rem); min-width: 0; height: 36px; border-color: #D6DCE8; border-radius: 7px; background: #FFFFFF; }
+.al-strip { gap: 10px; padding: 8px; border-bottom-color: #EDF0F5; background: #FFFFFF; }
+.al-strip-who b { color: #293247; font-size: .875rem; font-weight: 600; }
+.al-strip-who span { color: #788194; font-size: .75rem; }
+.al-status { font-size: .75rem; font-weight: 600; }
+.al-metrics { gap: 18px; }
+.al-metrics b { color: #293247; font-size: 1.0625rem; font-weight: 600; }
+.al-metrics span { color: #788194; font-size: .71875rem; }
+.al-week { padding: 8px; }
+.al-week .section-title { margin: 0 0 6px; color: #465166; font-size: .8125rem; letter-spacing: 0; text-transform: none; }
+.al-day-row { gap: 8px; padding: 9px 0; border-bottom-color: #EDF0F5; color: #465166; }
+.al-day-name { color: #293247; font-weight: 600; }
+.al-muted { color: #788194; }
+.al-day {
+  padding: 8px;
+  border-bottom-color: #EDF0F5;
+  background: #F7F8FC;
+  color: #5A6476;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.al-row {
+  position: relative;
+  min-height: 62px;
+  gap: 12px;
+  padding: 8px;
+  border-bottom-color: #EDF0F5;
+  background: #FFFFFF;
+}
+.al-row::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 23px;
+  width: 1px;
+  background: #E4E9F1;
+  content: "";
+}
+.al-event-dot {
+  position: absolute;
+  z-index: 1;
+  left: 19px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  background: var(--al-dot, #7C8798);
+  box-shadow: 0 0 0 1px var(--al-dot, #7C8798);
+  transform: translateY(-50%);
+}
+.al-row[data-kind="call"] { --al-dot: #187B69; }
+.al-row[data-kind="text"] { --al-dot: #3B6FD4; }
+.al-row[data-kind="wa"] { --al-dot: #28774B; }
+.al-row[data-kind="email"],
+.al-row[data-kind="open"] { --al-dot: #675FA6; }
+.al-row[data-kind="campaign"] { --al-dot: #3B6FD4; }
+.al-row[data-kind="lead"] { --al-dot: #7C8798; }
+.al-row-main { gap: 2px; }
+.al-row-main b { color: #30394B; font-size: .875rem; font-weight: 600; }
+.al-row-main > span { color: #586376; font-size: .8125rem; line-height: 1.4; }
+.al-row-side { gap: 2px; color: #788194; font-size: .71875rem; }
+.al-empty { max-width: 24rem; margin: auto; padding: 18px; color: #697386; line-height: 1.5; }
+.al-more { position: relative; flex: 0 0 auto; }
+.al-more > summary { list-style: none; cursor: pointer; }
+.al-more > summary::-webkit-details-marker { display: none; }
+.al-more-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 72px;
+  min-height: 36px;
+  padding: 0 9px;
+  border: 1px solid #D6DCE8;
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: #536075;
+  font-size: .8125rem;
+  font-weight: 500;
+}
+.al-more-trigger:hover,
+.al-more-trigger:focus-visible,
+.al-more[open] .al-more-trigger { border-color: #AFC2E9; background: #EAF0FF; color: #315EA8; }
+.al-more-trigger:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+.al-more-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  right: 0;
+  display: grid;
+  gap: 10px;
+  width: min(250px, calc(100vw - 32px));
+  padding: 12px;
+  border: 1px solid #D6DCE8;
+  border-radius: 10px;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px rgba(30,34,53,.14);
+}
+.al-more-field { display: grid; gap: 5px; color: #596477; font-size: .8125rem; font-weight: 500; }
+.al-more-field .input { min-width: 0; min-height: 36px; border-color: #D6DCE8; border-radius: 7px; background: #FFFFFF; color: #293247; }
+.al-more-field .input:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+.al-team .al-empty { padding: 8px; }
+@media (max-width: 64rem) {
+  .cp-page { overflow: visible; }
+  .cp-top { gap: 6px; padding: 7px; }
+  .cp-name { flex: 1 1 9rem; min-width: 8rem; }
+  .cp-steps { order: 3; flex-basis: 100%; }
+  .cp-more { margin-left: auto; }
+  .al-search { width: min(12rem, 38vw); }
+}
+@media (max-width: 42rem) {
+  .cp-more-menu { min-width: 176px; }
+  .cp-steps { gap: 0; }
+  .cp-steps li + li::before { margin-inline: .25rem; }
+  #logPage .panel-head { gap: 6px; }
+  #logPage .al-strip { flex-wrap: wrap; padding: 10px 12px; }
+  .al-metrics { width: 100%; margin-left: 0; padding-left: 40px; justify-content: space-between; }
+  .al-week { padding-inline: 12px; }
+  .al-day-row { grid-template-columns: minmax(4.5rem, .8fr) repeat(3, minmax(0, 1fr)); gap: 4px; font-size: .6875rem; }
+  .al-row { padding-right: 10px; }
+  .al-row-side { font-size: .6875rem; }
+  .al-search { width: min(10rem, 44vw); }
+}
+
+/* ── Scanner: persistent results grid, quieter settings, clear live state ── */
+.sc-page {
+  padding: .5rem .5rem .5rem .75rem;
+  border-left: 1px solid #D6DCE8;
+  background: #E8EBF2;
+}
+.sc-source:not(.sc-compact) {
+  border: 1px dashed #C9D2E1;
+  border-radius: 16px;
+  background: #FFFFFF;
+}
+.sc-source.sc-over { border: 1px solid #5D86D7; background: #F1F5FF; }
+.sc-hit { min-height: 8rem; padding-bottom: 1.75rem; }
+.sc-hit-title { font-size: .9375rem; font-weight: 600; }
+.sc-hit-sub { font-size: .78125rem; color: #697386; }
+.sc-folder { min-height: 32px; font-size: .75rem; }
+.sc-settings {
+  align-items: center;
+  gap: 8px 16px;
+  padding: 6px 8px;
+  border: 1px solid #D6DCE8;
+  border-radius: 10px;
+  background: #F7F8FC;
+}
+.sc-set { gap: 8px; color: #465166; font-size: .78125rem; font-weight: 500; }
+.sc-set input {
+  min-height: 36px;
+  border-color: #D6DCE8;
+  border-radius: 7px;
+  background: #FFFFFF;
+  text-align: left;
+}
+.sc-set input:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 1px; }
+.sc-more { position: relative; margin-left: auto; flex: 0 0 auto; }
+.sc-more > summary { list-style: none; cursor: pointer; }
+.sc-more > summary::-webkit-details-marker { display: none; }
+.sc-more-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 76px;
+  min-height: 36px;
+  padding: 0 9px;
+  border: 1px solid #D6DCE8;
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: #536075;
+  font-size: .8125rem;
+  font-weight: 500;
+}
+.sc-more-trigger:hover,
+.sc-more-trigger:focus-visible,
+.sc-more[open] .sc-more-trigger { border-color: #AFC2E9; background: #EAF0FF; color: #315EA8; }
+.sc-more-trigger:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+.sc-more-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  right: 0;
+  display: grid;
+  gap: 2px;
+  min-width: 200px;
+  padding: 5px;
+  border: 1px solid #D6DCE8;
+  border-radius: 10px;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px rgba(30,34,53,.14);
+}
+.sc-more-item {
+  min-height: 36px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #3F4A5D;
+  font: inherit;
+  font-size: .8125rem;
+  text-align: left;
+  cursor: pointer;
+}
+.sc-more-item:hover,
+.sc-more-item:focus-visible { outline: none; background: #F2F5FA; color: #315EA8; }
+.sc-more-item:focus-visible { box-shadow: inset 0 0 0 2px #3B6FD4; }
+.sc-more-item[data-act="rescan"] { color: #855A0B; }
+.sc-more-item[data-act="retry"] { color: #9C3F40; }
+.sc-more-item[hidden],
+.sc-more-meta[hidden] { display: none; }
+.sc-more-meta { padding: 7px 9px 3px; border-top: 1px solid #EDF0F5; color: #788194; font-size: .71875rem; }
+.sc-results { min-height: 18rem; border-color: #D6DCE8; border-radius: 12px; background: #FFFFFF; }
+.sc-head { min-height: 42px; border-bottom: 1px solid #EDF0F5; background: #F7F8FC; }
+.sc-head .panel-title { color: #293247; font-size: .875rem; font-weight: 600; }
+.sc-grid-wrap { min-height: 14rem; background: #FFFFFF; }
+.sg th { background: #F7F8FC; border-color: #EDF0F5; color: #687386; }
+.sg td { border-color: #EDF0F5; }
+.sg .sc-grid-empty td {
+  height: 7rem;
+  background: #FFFFFF;
+  color: #788194;
+  font-size: .8125rem;
+  text-align: center;
+}
+.sc-strip { min-height: 42px; padding-inline: 10px; }
+.sc-chip { font-size: .75rem; font-weight: 600; }
+.sc-ctrls .btn { min-height: 36px; border-radius: 7px; }
+.sc-progress { gap: 7px; }
+.sc-stats { color: #5B6577; font-size: .78125rem; }
+.sc-stats b { font-weight: 600; color: #293247; }
+.sc-meter { height: 3px; background: #DCE2EC; }
+.sc-meter[data-state="paused"] i { background: #C88A24; }
+.sc-meter[data-state="complete"] i { background: #25836C; }
+.sc-audit { border-color: #D6DCE8; border-radius: 12px; background: #FFFFFF; }
+.sc-audit-head { min-height: 40px; background: #F7F8FC; }
+.sc-audit.open .sc-audit-head { border-bottom-color: #EDF0F5; }
+.sc-audit.open .sc-audit-head { box-shadow: inset 2px 0 #7A8799; }
+.sc-issues { color: #9C3F40; font-size: .75rem; font-weight: 500; }
+.sc-issue td:first-child { box-shadow: inset 3px 0 0 #C84E50; }
+.sc-menu { border-color: #D6DCE8; border-radius: 10px; background: #FFFFFF; box-shadow: 0 10px 28px rgba(30,34,53,.14); }
+.sc-dialog { border-color: #D6DCE8; border-radius: 14px; background: #FFFFFF; }
+.sc-dialog-head { background: #F7F8FC; }
+.sc-rescan select, .sc-pages { min-height: 32px; border-radius: 6px; }
+
+/* ── Dashboard: values first, subtle semantic rules, compact empty states ── */
+.db-page { gap: 8px; }
+.db-head { display: flex; justify-content: flex-end; align-items: center; min-height: 20px; }
+.db-hello { display: none; }
+.db-date { margin: 0; color: #697386; font-size: .75rem; }
+.db-stats { gap: 8px; }
+.db-stat-group { border-color: #D6DCE8; border-radius: 12px; background: #FFFFFF; }
+.db-stat { min-height: 64px; justify-content: center; padding: 8px 12px; border-right-color: #EDF0F5; }
+.db-stat-label { gap: 6px; color: #657084; font-size: .75rem; }
+.db-stat-label .ic { color: #426FBD; }
+.db-stat-val { color: #293247; font-size: 1.375rem; font-weight: 600; letter-spacing: -.015rem; }
+.db-stat.warn .ic { color: #B37816; }
+.db-stat.warn .db-stat-val { color: #754D0A; }
+.db-sections { gap: 8px; grid-template-rows: auto auto; align-items: start; align-content: start; }
+.db-section { gap: 6px; padding: 12px 14px; border-color: #D6DCE8; border-radius: 12px; background: #FFFFFF; }
+.db-section[data-tone="attention"] { border-left: 3px solid #D29A38; }
+.db-section[data-tone="chances"] { border-left: 2px solid #5E83C4; }
+.db-section[data-tone="team"] { border-top: 2px solid #3A8B78; }
+.db-section-title {
+  gap: 7px;
+  color: #3F4A5D;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.db-section-title::before { width: 2px; height: 14px; border-radius: 1px; }
+.db-section[data-tone="attention"] .db-section-title::before { background: #D29A38; }
+.db-section[data-tone="chances"] .db-section-title::before { background: #5E83C4; }
+.db-section[data-tone="team"] .db-section-title::before { background: #3A8B78; }
+.db-grid { gap: 0; align-content: start; }
+.db-card { padding-top: 3px; border-top-color: #EDF0F5; }
+.db-card-head { gap: 7px; padding: 7px 0 3px; }
+.db-card-head .ic { color: #5374B5; }
+.db-card-head h3 { color: #374256; font-size: .8125rem; font-weight: 600; }
+.db-count { color: #6F798A; font-size: .75rem; font-weight: 600; }
+.db-list { max-height: 12rem; }
+.db-empty { padding: 5px 0; color: #788194; font-size: .75rem; line-height: 1.4; }
+.db-card:has(.db-empty) { padding-bottom: 2px; }
+.db-row { padding: 8px 2px; border-bottom-color: #EDF0F5; }
+.db-row:hover { background: #F7F9FD; }
+.db-row-company { color: #30394B; font-weight: 600; }
+.db-row-meta { color: #4F5B6F; font-size: .75rem; font-weight: 600; }
+.db-row-sub { color: #687386; font-size: .75rem; }
+.db-quiet { color: #986715; font-size: .75rem; font-weight: 600; }
+.db-quiet.urgent { color: #A93D3F; }
+.db-table-wrap { border-top: 1px solid #EDF0F5; }
+.db-table th,
+.db-table td { padding: 8px 10px; border-bottom-color: #EDF0F5; }
+.db-table th { position: sticky; top: 0; background: #F7F8FC; color: #657084; font-size: .75rem; font-weight: 600; }
+.db-table td { color: #465166; font-size: .78125rem; }
+.db-table tbody tr:nth-child(even) td { background: #FAFBFD; }
+.db-table tbody tr:hover td { background: #EAF0FF; }
+.db-team-status { color: #5E6A7D; font-size: .75rem; font-weight: 500; }
+.db-team-status[data-state="closed"] { color: #237763; }
+.db-team-status[data-state="engaged"] { color: #315EA8; }
+.db-team-status[data-state="contract"] { color: #855A0B; }
+@media (max-width: 64rem) {
+  .sc-page { padding: .375rem .375rem .5rem .625rem; }
+  .sc-settings { gap: 8px 12px; }
+  .db-page { overflow: visible; }
+  .db-section { min-height: 0; }
+}
+@media (max-width: 42rem) {
+  .sc-page { padding: .25rem 0 .375rem .375rem; }
+  .sc-settings { display: grid; grid-template-columns: 1fr 1fr; }
+  .sc-set { min-width: 0; align-items: flex-start; flex-direction: column; gap: 4px; }
+  .sc-set input, .sc-set .sc-money-in { width: 100%; }
+  .sc-more { justify-self: end; }
+  .sc-source:not(.sc-compact) { min-height: 8.5rem; }
+  .sc-results { min-height: 20rem; }
+  .sc-strip { flex-wrap: wrap; }
+  .sc-strip-name { max-width: calc(100vw - 12rem); }
+  .sc-ctrls { gap: 4px; }
+  .db-stats { grid-template-columns: 1fr; }
+  .db-stat-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .db-sections { display: flex; flex-direction: column; overflow: visible; }
+  .db-section[data-tone="team"] { max-height: none; }
+  .db-grid { overflow: visible; }
+  .db-section:not([data-tone="team"]) { max-height: none; }
+  .db-row-top { align-items: flex-start; }
+  .db-table th, .db-table td { padding: 7px 6px; }
+}
+
+
+/* ── Phase 5 Email: calm workspace surfaces, readable rows, text tabs ── */
+.gm {
+  background: #F7F8FC;
+  border-color: #D6DCE8;
+}
+.gm-card { border-color: #D6DCE8; }
+.gm-search {
+  background: #F7F8FC;
+  border: 1px solid #E5E9F0;
+  border-radius: 8px;
+}
+.gm-search:hover { background: #F1F4F9; }
+.gm-search:focus-within { border-color: #AFC2E9; box-shadow: 0 0 0 2px rgba(59,111,212,.12); }
+.gm-count { background: #EDF1F7; color: #536075; font-size: 10px; font-weight: 600; }
+.gm-ib { border-radius: 8px; }
+.gm-ib.sm { width: 36px; height: 36px; }
+.gm-ib.xs { width: 32px; height: 32px; }
+.gm-ib:focus-visible,
+.gm-viewbtn:focus-visible,
+.gm-chip:focus-visible,
+.gm-btn:focus-visible,
+.gm-link:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+.gm-compose {
+  height: 44px;
+  min-width: 44px;
+  border-radius: 8px;
+  background: #3B6FD4;
+  color: #FFFFFF;
+  box-shadow: none;
+}
+.gm-compose:hover { background: #315EA8; box-shadow: none; }
+.gm-chips { gap: 14px; padding: 0 8px; background: #FFFFFF; }
+.gm-chip {
+  height: 38px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #687386;
+  font-weight: 500;
+}
+.gm-chip:hover { background: transparent; color: #293247; }
+.gm-chip.on { border-color: #3B6FD4; background: transparent; color: #315EA8; font-weight: 600; }
+.gm-row { border-bottom-color: #EDF0F5; }
+.gm-row.unread { background: #FBFCFF; }
+.gm-row.unread .gm-row-names,
+.gm-row.unread .gm-row-subj,
+.gm-row.unread .gm-row-date { font-weight: 600; }
+.gm-row-snip { color: #5D687A; }
+.gm-row.sel, .gm-row.open { background: #EAF0FF; }
+.gm-row-hover { display: none !important; }
+.gm-row:hover .gm-row-date { display: block; }
+.gm-tag { border-color: #E2E7EF; background: #F7F8FC; color: #596477; }
+.gm-flyout, .gm-adv { border: 1px solid #D6DCE8; border-radius: 12px; box-shadow: 0 10px 28px rgba(30,34,53,.14); }
+.gm-read { background: #FFFFFF; }
+.gm-read-empty { color: #697386; }
+
+/* Keep every Communications tab present alongside its separate utility controls. */
+#commsTabs {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3px;
+  overflow: visible;
+}
+#commsTabs .tab-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 36px;
+  height: 36px;
+  padding-inline: 3px;
+  border-radius: 0;
+  white-space: nowrap;
+}
+#commsTabs .tab-btn.active { box-shadow: inset 0 -2px #3B6FD4; }
+#commsTabs .tab-btn:focus-visible { outline: 2px solid #3B6FD4; outline-offset: -2px; }
+#commsTabs .tab-badge {
+  top: 1px;
+  right: 1px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 4px;
+  background: #EDF1F7;
+  color: #536075;
+  font-size: 10px;
+  line-height: 16px;
+}
+.panel-comms .comms-head > .panel-tools { flex: 0 0 auto; gap: 4px; margin-left: 4px; }
+.panel-comms .comms-head > .panel-tools .icon-btn { width: 36px; min-width: 36px; height: 36px; border-radius: 8px; }
+
+/* Leads: parallel cards and one consistently weighted contact row per company fact row. */
+.detail-body .fact-val,
+.detail-body .contact-value { font-weight: 600; }
+#leadsPage .contact-facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: .625rem 1rem; }
+#leadsPage .contact-fact { min-width: 0; }
+#leadsPage .contact-fact .fact-val { min-width: 0; }
+#leadsPage .contact-fact .contact-value { display: inline; max-width: 100%; text-align: left; }
+#leadsPage .contact-fact .contact-value[data-pop="email"] { overflow-wrap: anywhere; }
+#leadsPage .info-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Campaign channel surfaces use the shared border, not a decorative blue top rule. */
+.cp-channel[data-channel="email"],
+.cp-channel[data-channel="sms"] { border-top: 1px solid #D6DCE8; }
+
+@media (max-width: 42rem) {
+  #leadsPage .info-pair { grid-template-columns: minmax(0, 1fr); }
+  #commsTabs { gap: 1px; }
+  #commsTabs .tab-btn { padding-inline: 1px; font-size: max(.6875rem, .6875rem * var(--crm-font-scale, 1)); }
+  .gm-chips { gap: 10px; padding-inline: 10px; }
+  .gm-chip { padding-inline: 1px; font-size: max(.75rem, .75rem * var(--crm-font-scale, 1)); }
+}
+
+
+/* ── Phase 7 Activity Log: keyboard-ready period tabs and timeline controls ── */
+#logPage .seg {
+  gap: 8px;
+  padding: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #EDF0F5;
+  background: transparent;
+}
+#logPage .seg button {
+  min-height: 36px;
+  padding: 0 6px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #687386;
+  box-shadow: none;
+  font-size: .8125rem;
+}
+#logPage .seg button[aria-checked="true"] {
+  border-bottom-color: #3B6FD4;
+  background: transparent;
+  color: #315EA8;
+  box-shadow: none;
+  font-weight: 600;
+}
+#logPage .seg button:focus-visible,
+#logPage .al-row:focus-visible,
+#logPage .open-record:focus-visible,
+#logPage .al-search:focus-visible { outline: 2px solid #3B6FD4; outline-offset: 2px; }
+#logPage .panel-count {
+  padding: 2px 6px;
+  border: 1px solid #E4E9F1;
+  border-radius: 5px;
+  background: #F7F8FC;
+  color: #596477;
+  font-size: .71875rem;
+  font-weight: 600;
+}
+#logPage .al-row:hover { background: #F7F9FD; }
+#logPage .al-row-main .open-record { width: 28px; height: 28px; border-radius: 6px; }
+#logPage .al-row-main .open-record:hover { background: #EAF0FF; color: #315EA8; }
+
+/* ── Phase 8 Dialer: layered navy, neutral number entry, clear call actions ── */
+.phone-ctl { height: 36px; border-color: #D6DCE8; border-radius: 8px; background: #FFFFFF; }
+.phone-ctl button { min-height: 36px; }
+.phone-ctl-open { border-radius: 7px 0 0 7px; }
+.phone-ctl .phone-ctl-pick { border-radius: 0 7px 7px 0; }
+.dialer {
+  --d-line: rgba(220,228,245,.16);
+  --d-fill: rgba(255,255,255,.05);
+  --d-hover: rgba(255,255,255,.09);
+  width: min(420px, calc(100vw - 16px));
+  padding: 12px;
+  border: 1px solid #39425E;
+  border-radius: 16px;
+  background: #252B45;
+  color: #F5F7FC;
+  box-shadow: 0 18px 44px rgba(17,22,38,.32);
+}
+.dialer-main { min-height: 44px; gap: 8px; }
+.dialer-avatar,
+.dialer-avatar[hidden] { display: flex; }
+.dialer-avatar {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(184,203,255,.25);
+  border-radius: 50%;
+  background: #39466B;
+  color: #EAF0FF;
+  font-size: .8125rem;
+  font-weight: 600;
+}
+.dialer-avatar[hidden] { display: none; }
+.dialer-name { color: #FFFFFF; font-size: .875rem; font-weight: 600; }
+.dialer-sub { gap: 8px; margin-top: 2px; }
+.dialer-status { color: #B8C0D3; font-size: .75rem; }
+.dialer-status.warn,
+.dialer[data-tone="wait"] .dialer-status { color: #E6BC68; }
+.dialer-timer { color: #71D2B6; font-size: .8125rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.dialer[data-state="active"] .dialer-status,
+.dialer[data-state="dialing"] .dialer-status { display: block; }
+.dial-keypad {
+  width: 36px;
+  height: 36px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #CCD4E6;
+}
+.dial-keypad:hover,
+.dial-keypad.active { border-color: #49577E; background: #343F61; color: #FFFFFF; }
+.dialer[data-state="active"] .dial-keypad { display: flex; }
+.dialer-input {
+  min-width: 5rem;
+  height: 36px;
+  padding: 0 9px;
+  border-color: #4B5672;
+  border-radius: 7px;
+  background: #171C2D;
+  color: #F5F7FC;
+  -webkit-text-fill-color: #F5F7FC;
+  font-size: .875rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.dialer-input:focus { border-color: #79A4FF; background: #1B2236; color: #F5F7FC; -webkit-text-fill-color: #F5F7FC; }
+.dialer-input:focus-visible { outline: 2px solid rgba(98,145,235,.5); outline-offset: 1px; }
+.dialer-input::placeholder { color: #A5AEC3; }
+.dialer-input:disabled,
+.dialer-input[readonly] { color: #F5F7FC; -webkit-text-fill-color: #F5F7FC; }
+.dial-action { display: flex; flex: 0 0 auto; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 44px; }
+.dial-action[hidden] { display: none; }
+.dial-action-label { min-height: 14px; color: #D0D6E4; font-size: .6875rem; font-weight: 600; line-height: 1.1; white-space: nowrap; }
+.dial-circle {
+  width: 40px;
+  height: 40px;
+  background: #218A75;
+  box-shadow: none;
+}
+.dial-circle:hover { background: #2AA187; box-shadow: none; }
+.dial-circle.end { background: #B94B50; box-shadow: none; }
+.dial-circle.end:hover { background: #C65B60; }
+.dial-circle:focus-visible,
+.dial-keypad:focus-visible,
+.dialer-min:focus-visible,
+.dial-ctrl:focus-visible,
+.dial-more-trigger:focus-visible,
+.key-btn:focus-visible { outline: 2px solid #9AB8FF; outline-offset: 2px; }
+.dialer-min { width: 32px; height: 32px; border-radius: 8px; color: #C8D0E0; }
+.dialer-min:hover { background: rgba(255,255,255,.08); color: #FFFFFF; }
+.dial-ctrls { gap: 4px; margin-top: 8px; padding-top: 8px; }
+.dial-ctrl {
+  min-width: 0;
+  min-height: 44px;
+  padding: 4px 2px;
+  gap: 3px;
+  border-radius: 8px;
+  color: #C9D1E2;
+}
+.dial-ctrl:hover { background: rgba(255,255,255,.07); color: #FFFFFF; }
+.dial-ctrl.active { border-color: transparent; background: #364366; color: #FFFFFF; }
+.dial-ctrl.active .dial-icon { background: transparent; color: #AFC5FF; }
+.dial-icon { width: 24px; height: 24px; }
+.dial-ctrl-label { font-size: .75rem; font-weight: 500; }
+.dial-more { position: relative; flex: 1 1 0; min-width: 0; }
+.dial-more > summary { list-style: none; cursor: pointer; }
+.dial-more > summary::-webkit-details-marker { display: none; }
+.dial-more-trigger {
+  display: flex;
+  min-height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 8px;
+  color: #C9D1E2;
+  font-size: .75rem;
+  font-weight: 500;
+}
+.dial-more-trigger:hover,
+.dial-more[open] .dial-more-trigger { background: rgba(255,255,255,.07); color: #FFFFFF; }
+.dial-more-menu {
+  position: absolute;
+  z-index: 85;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: grid;
+  gap: 2px;
+  width: min(220px, calc(100vw - 32px));
+  padding: 5px;
+  border: 1px solid #46516D;
+  border-radius: 12px;
+  background: #2B3350;
+  box-shadow: 0 14px 32px rgba(10,14,26,.36);
+}
+.dial-more-menu .dial-ctrl { min-height: 44px; flex-direction: row; justify-content: flex-start; gap: 8px; padding: 0 9px; text-align: left; }
+.dial-more-menu .dial-icon { flex: 0 0 24px; }
+.keypad {
+  grid-template-columns: repeat(3, 44px);
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid #39425E;
+  border-radius: 12px;
+  background: #252B45;
+}
+.key-btn { min-height: 44px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.06); font-size: .9375rem; font-weight: 600; }
+.key-btn:hover { background: #35415F; }
+.key-btn:active { border-color: #5C7FC6; background: #394B73; }
+@media (max-width: 42rem) {
+  .phone-ctl { height: 36px; margin-right: 4px; }
+  .dialer { width: calc(100vw - 1rem); max-width: calc(100vw - 1rem); padding: 10px; }
+  .dialer-main { gap: 6px; }
+  .dialer-avatar { width: 32px; height: 32px; flex-basis: 32px; }
+  .dialer-input { flex: 0 1 auto; min-width: 4.5rem; max-width: 8rem; }
+  .dial-circle { width: 44px; height: 44px; }
+  .dial-keypad, .dialer-min { width: 44px; height: 44px; }
+  .dial-action { min-width: 44px; }
+  .dial-action-label { font-size: .75rem; }
+  .dial-ctrl { min-height: 48px; }
+  .dial-more-trigger { min-height: 48px; }
+  .key-btn { min-height: 44px; }
+}
+
+
+/* Let sparse Activity Log summaries fit their content; cap and scroll when history grows. */
+@media (min-width: 64.001rem) {
+  #logPage.workspace { align-items: flex-start; }
+  #logPage .al-team,
+  #logPage .al-time { height: auto; max-height: calc(100vh - 96px); }
+  #logPage .al-team { flex: 0 1 60%; }
+  #logPage .al-time { flex: 1 1 40%; }
+  #logPage .al-scroll { flex: 0 1 auto; }
+  #logPage .al-team .al-scroll { overflow: visible; }
+  #logPage .al-week { flex: 0 1 auto; }
+  #logPage .al-time .al-scroll { max-height: calc(100vh - 164px); overflow: auto; }
+}
+
+.dial-fold.open > div { overflow: visible; }
+.dial-more:not([open]) > .dial-more-menu { display: none; }
+
+/* ── Phase 9 Responsive: prevent top-bar, popover, and dialog clipping ── */
+@media (max-width: 64rem) {
+  .topbar-search,
+  .topbar-search input,
+  .topbar-right { min-width: 0; }
+  .topbar-search { flex: 1 1 0; }
+  .phone-ctl { flex: 0 0 auto; }
+  .notif-menu {
+    right: 0;
+    width: min(25rem, calc(100vw - 1rem));
+    max-width: calc(100vw - 1rem);
+  }
+  #pop { max-width: calc(100vw - 1rem); max-height: calc(100dvh - 1rem); overflow: auto; }
+  .lead-options-menu { right: 0; max-width: calc(100vw - 1rem); }
+  .cp-drawer { width: min(26rem, calc(100vw - 1rem)); }
+  .gm-flyout {
+    right: .5rem;
+    width: min(21.25rem, calc(100vw - 1rem));
+    max-height: calc(100dvh - 1rem);
+  }
+  .gm.compact .gm-adv {
+    right: .5rem;
+    width: min(21.25rem, calc(100vw - 1rem));
+    min-width: 0;
+    max-height: calc(100dvh - 1rem);
+    overflow-y: auto;
+  }
+}
+@media (max-width: 42rem) {
+  .topbar { gap: .375rem; }
+  .topbar-search { margin-left: 0; }
+  .topbar-search input { padding-left: 1.875rem; }
+  .modal-backdrop { padding: .5rem; }
+  .modal {
+    display: flex;
+    width: min(25rem, calc(100vw - 1rem));
+    max-width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 1rem);
+    flex-direction: column;
+  }
+  .modal-head,
+  .modal-foot { flex: 0 0 auto; }
+  .modal-body { min-height: 0; overflow-y: auto; grid-template-columns: minmax(0, 1fr); }
+  .modal-body .field.wide { grid-column: auto; }
+  .modal-foot { flex-wrap: wrap; }
+  .modal-foot .btn { min-height: 40px; }
+  .lead-options-menu { width: min(250px, calc(100vw - 1rem)); }
+  .notif-menu { width: min(25rem, calc(100vw - 1rem)); }
+  .gm-adv {
+    position: fixed;
+    z-index: 60;
+    top: auto;
+    right: .5rem;
+    bottom: .5rem;
+    left: .5rem;
+    width: auto;
+    min-width: 0;
+    max-height: calc(100dvh - 1rem);
+    overflow-y: auto;
+  }
+  .gm-flyout { right: .5rem; width: min(21.25rem, calc(100vw - 1rem)); }
+  .cp-drawer .modal-foot { flex-wrap: wrap; }
+  .sc-grid-wrap { max-width: 100%; overflow: auto; }
+  .sg { min-width: 42rem; }
+  .gm.compact .gm-adv {
+    position: fixed;
+    z-index: 60;
+    top: auto;
+    right: .5rem;
+    bottom: .5rem;
+    left: .5rem;
+    width: auto;
+    min-width: 0;
+    max-width: calc(100vw - 1rem);
+  }
+}
+
+@media (max-width: 64rem) {
+  .nb-stack {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    width: 100%;
+    max-height: none;
+  }
+  .nb-stack:empty { display: none; }
+  .nb-stack .nb { max-height: none; overflow: visible; }
+  .nb-stack .nb-text { display: block; }
+}
+
+/* Keep copied EIN values and actionable contact values typographically identical. */
+#leadsPage .detail-body .fact-val {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 600;
+}
+#leadsPage .detail-body .contact-value {
+  font: inherit;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 600;
+}
+
+/* Banking values are deliberately quieter than the company identity; keep all detail-card values legible on white. */
+#leadsPage .detail-body .fact-val,
+#leadsPage .detail-body .contact-value { color: #4A5261; }
+#leadsPage .detail-body .section-pair > .section-card:first-child .fact-val {
+  font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1));
+  color: #4A5261;
+}
+
+/* Notification banners occupy space instead of overlaying page controls or records. */
+.nb-stack {
+  position: static;
+  inset: auto;
+  z-index: auto;
+  width: min(22.5rem, calc(100vw - 2rem));
+  max-height: none;
+  margin-left: auto;
+}
+.nb-stack:empty { display: none; }
+.nb-stack .nb { max-height: none; overflow: visible; }
+.nb-stack .nb-text { display: block; }
+@media (max-width: 64rem) {
+  .nb-stack { width: 100%; margin-left: 0; }
+}
+
+/* Middle panel: consistent answer typography and soft section-header bands. */
+#leadsPage .detail-body .fact-val:not(.none),
+#leadsPage .detail-body .contact-value,
+#leadsPage .detail-body .section-pair > .section-card:first-child .fact-val:not(.none) {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1));
+  font-weight: 600;
+  color: #5B6576;
+}
+#leadsPage .detail-body .stmt td:not(.as-of) {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1));
+  font-weight: 600;
+  color: #5B6576;
+}
+#leadsPage .detail-body .section-card > .section-title {
+  margin: -.25rem -.25rem .75rem;
+  padding: .5rem .75rem;
+  border: 0;
+  background: #F7F8FC;
+  border-radius: 8px;
+}
+
+/* Latest requested CRM-wide refinements (Email keeps its original palette). */
+:root { --text-primary: #4A5261; }
+#mailPage { --text-primary: #3A3F4B; --text-secondary: #5A6078; --text-muted: #8C93AB; }
+
+/* Keep names and answers aligned to one readable charcoal across the three Leads panels. */
+#leadsPage .panel-title,
+#leadsPage .lead-company,
+#leadsPage .lead-revenue,
+#leadsPage .detail-name,
+#leadsPage .detail-body .section-card > .section-title,
+#leadsPage .detail-body .fact-val:not(.none),
+#leadsPage .detail-body .contact-value,
+#leadsPage .detail-body .stmt td:not(.as-of),
+#leadsPage .comms-tabs .tab-btn:hover,
+#leadsPage #commsBody .ios-name,
+#leadsPage #commsBody .wa-name,
+#leadsPage #commsBody .call-name,
+#leadsPage #commsBody .call-peer,
+#leadsPage #commsBody .ios-preview,
+#leadsPage #commsBody .wa-preview {
+  color: #4A5261;
+}
+#leadsPage .detail-body { font-variant-numeric: tabular-nums; }
+#leadsPage .detail-body .stmt td:not(.as-of) { font-variant-numeric: tabular-nums; }
+#leadsPage .detail-body .financial-pitch-card {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
+}
+#leadsPage .financial-pitch-card .section-title { margin-bottom: .5rem; }
+#leadsPage .financial-pitch-card .summary {
+  margin: 0;
+  color: #4A5261;
+  font-size: max(.8125rem, .8125rem * var(--crm-font-scale, 1));
+  line-height: 1.5;
+}
+#leadsPage .section-pair { align-items: stretch; }
+
+/* Restore the original Gmail-style Compose control, including its soft-blue surface. */
+#mailPage .gm-compose {
+  height: 3.5rem;
+  min-width: 3.5rem;
+  border-radius: 1rem;
+  background: var(--gm-compose);
+  color: #3A3F4B;
+  box-shadow: var(--gm-shadow-1);
+}
+#mailPage .gm-compose:hover {
+  background: var(--gm-compose-hover);
+  box-shadow: var(--gm-shadow-2);
+}
+
+/* Close the Scanner surface and frozen first column with a clear, quiet left edge. */
+#scanPage .sc-source,
+#scanPage .sc-results,
+#scanPage .sc-audit { border-color: #D6DCE8; }
+#scanPage .sg th:first-child,
+#scanPage .sg td:first-child { border-left-color: #D6DCE8; }
+
+/* Equal 50/50 Dashboard panels at desktop, with the full-width team panel below. */
+#dashPage .db-section[data-tone="attention"] { border-left: 1px solid #D6DCE8; }
+#dashPage .db-section[data-tone="attention"] .db-section-title::before { background: #D6DCE8; }
+#dashPage .db-section[data-tone="chances"] { border-left-width: 1px; }
+@media (min-width: 64.0625rem) {
+  #dashPage .db-sections {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: stretch;
+    align-content: stretch;
+  }
+  #dashPage .db-section:not([data-tone="team"]) { height: 100%; min-height: 0; }
+  #dashPage .db-section[data-tone="team"] { grid-column: 1 / -1; }
+}
+
+/* Match high-emphasis labels and values across Dashboard, Campaign, Scanner, and Activity Log. */
+#dashPage .db-section-title,
+#dashPage .db-card-head h3,
+#dashPage .db-row-company,
+#dashPage .db-row-meta,
+#dashPage .db-table td,
+#dashPage .db-stat:not(.warn) .db-stat-val,
+.cp-page .cp-name,
+.cp-page .cp-channel h2,
+.cp-page .cp-field h3,
+.cp-page .cp-more-item,
+#logPage .panel-title,
+#logPage .al-strip-who b,
+#logPage .al-metrics b,
+#logPage .al-week .section-title,
+#logPage .al-day-row,
+#logPage .al-day-name,
+#logPage .al-row-main b,
+#logPage .al-more-trigger,
+#scanPage .sc-head .panel-title,
+#scanPage .sc-stats b,
+#scanPage .sc-more-item,
+#scanPage .sc-set {
+  color: #4A5261;
+}
+
+#leadsPage .lead-options-menu select,
+#leadsPage .wa-who b,
+#leadsPage .chat.wa .wa-name,
+#logPage .al-more-field .input { color: #4A5261; }
+
+/* Restore the original selected lead treatment: pale row only, without a left rule or avatar recolor. */
+#leadsPage .lead-row.selected::before { display: none; content: none; }
+#leadsPage .lead-row.selected > .avatar:not(:has(img)) {
+  background: var(--tint, linear-gradient(#A7ADBA, #858A96));
+  color: #FFFFFF;
+}
+
+/* Middle panel cards: lighter, accessible answers and card headings two pixels smaller. */
+#leadsPage .detail-body .fact-val:not(.none),
+#leadsPage .detail-body .contact-value,
+#leadsPage .detail-body .stmt td:not(.as-of),
+#leadsPage .detail-body .summary,
+#leadsPage .detail-body .feed-text {
+  color: #626D7D;
+}
+#leadsPage .detail-body .section-card > .section-title {
+  font-size: max(.6875rem, calc(.8125rem * var(--crm-font-scale, 1) - .125rem));
+  color: #687386;
+}
+
+/* Solid semantic call, text, WhatsApp, and email actions; 36px targets remain easy to tap. */
+#leadsPage .act-btn {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  color: #FFFFFF;
+  box-shadow: none;
+  filter: none;
+}
+#leadsPage .act-btn.call { background: #0F766E; }
+#leadsPage .act-btn.sms { background: #2D5F9A; }
+#leadsPage .act-btn.wa { background: #16803C; }
+#leadsPage .act-btn.email { background: #635BBD; }
+#leadsPage .act-btn:hover { filter: brightness(.92); }
+#leadsPage .act-btn:focus-visible { outline: 2px solid #315EA8; outline-offset: 2px; }
+
+/* Compact red count badges replace unread bullets in Communications. */
+#commsTabs .tab-badge,
+#commsTabs .tab-btn.active .tab-badge {
+  background: #C43B3B;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+}
+#commsTabs .tab-badge { min-width: 15px; height: 15px; line-height: 15px; border-radius: 4px; }
+#commsBody .unread-badge,
+#commsBody .wa-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: #C43B3B;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+}
+#commsBody .ios-row:has(.unread-badge) { background: #F7F9FF; box-shadow: inset 2px 0 #6A8EE2; }
+#commsBody .ios-row:has(.unread-badge) .ios-name { color: #4A5261; font-weight: 700; }
+#commsBody .ios-row:has(.unread-badge) .ios-preview { color: #596477; }
+#commsBody .ios-time .unread-badge { margin-left: 3px; }
+#commsBody .wa-row:has(.wa-badge) .wa-name { color: #4A5261; font-weight: 700; }
+
+/* Restore Gmail's original Compose appearance in the compact Communications Email panel too. */
+#mailHostComms .gm-compose {
+  height: 3.5rem;
+  min-width: 3.5rem;
+  border-radius: 1rem;
+  background: var(--gm-compose);
+  color: #3A3F4B;
+  box-shadow: var(--gm-shadow-1);
+}
+#mailHostComms .gm-compose:hover { background: var(--gm-compose-hover); box-shadow: var(--gm-shadow-2); }
+#mailHostComms .gm-fab {
+  border-radius: 1rem;
+  background: var(--gm-compose);
+  color: #3A3F4B;
+  box-shadow: var(--gm-shadow-2);
+}
+#mailHostComms .gm-fab:hover { background: var(--gm-compose-hover); }
+
+/* Return unread notification counts to the original red badge treatment. */
+.notif-badge { background: #C43B3B; color: #FFFFFF; }
+
+/* Communications: restore the original text-tab page switching treatment, with no active blue rail. */
+#commsTabs .tab-btn,
+#commsTabs .tab-btn.active {
+  border-bottom: 0;
+  box-shadow: none;
+  background: transparent;
+}
+#commsTabs .tab-btn { color: var(--text-secondary); }
+#commsTabs .tab-btn:hover { color: var(--text-primary); background: transparent; }
+#commsTabs .tab-btn.active { color: var(--accent-blue); font-weight: 600; }
+#commsTabs .tab-badge {
+  position: static;
+  min-width: 15px;
+  width: auto;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: #FF3B30;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+}
+
+/* Keep unread rows gently tinted, but remove individual message badges and the blue left rail. */
+#commsBody .ios-row.unread,
+#commsBody .wa-row.unread { background: #F7F9FF; box-shadow: none; }
+#commsBody .ios-row.unread .ios-name,
+#commsBody .wa-row.unread .wa-name { color: #4A5261; font-weight: 700; }
+#commsBody .unread-badge,
+#commsBody .wa-badge { display: none !important; }
+
+/* Restore the original red badge color for the top-bar notification bell. */
+.notif-badge { background: var(--accent-red); color: #FFFFFF; }
+
+/* Restore the Dialer's green number LCD while retaining its clear keyboard focus ring. */
+#dialer .dialer-input {
+  padding-inline: 6px;
+  color: #35C94A;
+  -webkit-text-fill-color: #35C94A;
+  font-family: var(--font);
+  font-size: calc(.75rem * var(--crm-font-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+#dialer .dialer-input:focus {
+  border-color: rgba(53,201,74,.7);
+  background: #0B1B10;
+  color: #35C94A;
+  -webkit-text-fill-color: #35C94A;
+}
+#dialer .dialer-input:disabled,
+#dialer .dialer-input[readonly] { color: #35C94A; -webkit-text-fill-color: #35C94A; }
+@media (max-width: 42rem) {
+  #dialer .dialer-input { max-width: 10rem; }
+}
+@media (max-width: 22.5rem) {
+  #dialer .dialer-main { gap: 2px; }
+  #dialer .dialer-input {
+    max-width: calc(100vw - 13.5rem);
+    font-size: calc(.6875rem * var(--crm-font-scale, 1));
+  }
+}
+
+/* Leads workspace: unify dark content text across all three panels while leaving title/header colors intact. */
+#leadsPage .lead-company,
+#leadsPage .lead-revenue,
+#leadsPage .lead-contact,
+#leadsPage .detail-body .fact-val:not(.none),
+#leadsPage .detail-body .copy-val,
+#leadsPage .detail-body .contact-value,
+#leadsPage .detail-body .stmt td:not(.as-of),
+#leadsPage .detail-body .summary,
+#leadsPage .detail-body .feed-text,
+#commsBody .ios-name:not(.missed),
+#commsBody .wa-name,
+#commsBody .ios-preview,
+#commsBody .wa-preview,
+#commsBody .contact-name {
+  color: #4A5261;
+}
+
+/* Medium answer weight for all middle-panel facts, contact values, statements, activity, and outlook. */
+#leadsPage .detail-body .fact-val:not(.none),
+#leadsPage .detail-body .copy-val,
+#leadsPage .detail-body .contact-value,
+#leadsPage .detail-body .stmt td:not(.as-of),
+#leadsPage .detail-body .summary,
+#leadsPage .detail-body .feed-text {
+  font-weight: 500;
+}
+#leadsPage .detail-body .copy-val:hover { color: var(--accent-blue); }
+
+
+/* ── Final pass: desktop canvas on every viewport, native pan/zoom, and consistent CRM ink ── */
+:root {
+  --text-primary: #4A5261;
+  --text-secondary: #4A5261;
+}
+/* Preserve Email's prior neutral palette while the rest of the workspace uses one charcoal. */
+#mailPage,
+#mailHostComms {
+  --text-primary: #3A3F4B;
+  --text-secondary: #5A6078;
+  color: #3A3F4B;
+}
+html,
+body {
+  min-width: 1280px;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+.app {
+  min-width: 1280px;
+  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Keep the desktop composition intact; a narrow viewport pans over the same 1280px canvas. */
+@media (max-width: 80rem) {
+  .app { width: 1280px; min-width: 1280px; padding: var(--panel-gap); gap: var(--panel-gap); }
+  .body-area { width: auto; min-width: 0; overflow: hidden; gap: var(--panel-gap); }
+  .topbar { height: var(--header-h); min-height: var(--header-h); padding: 0 1.25rem; gap: 8px; }
+  .topbar-logo span { display: inline; }
+  .topbar-search { flex: 0 1 20rem; width: min(20rem, 30vw); max-width: 20rem; margin-left: 1.5rem; }
+  .topbar-right { gap: .875rem; }
+  .topbar-clock { display: flex; }
+  .sidebar { width: var(--sidebar-w); flex: 0 0 var(--sidebar-w); border-radius: 16px; }
+  .sidebar-section-label { visibility: visible; height: auto; padding: 1.25rem 1.125rem .375rem; }
+  .nav-item { justify-content: flex-start; gap: .75rem; padding: .6875rem 1.125rem; }
+  .nav-item .nav-label {
+    display: block; position: static; width: auto; height: auto; overflow: visible;
+    clip: auto; clip-path: none; white-space: nowrap; opacity: 1;
+  }
+  .sidebar-user-text { display: block; opacity: 1; }
+  .sidebar-status-dot { display: block; }
+  .sidebar-user { width: calc(100% + 1rem); margin: -.375rem -.5rem; padding: .375rem .5rem; }
+
+  #leadsPage.workspace { flex-direction: row; gap: 0; overflow: hidden; }
+  #leadsPage .panel-leads { flex: 0 0 22rem; min-width: 12rem; height: auto; }
+  #leadsPage .panel-detail { flex: 1 1 0; min-width: 16rem; min-height: 0; }
+  #leadsPage .panel-comms { flex: 0 0 24rem; width: auto; min-width: 12rem; min-height: 0; }
+  #leadsPage .resizer { display: block; flex: 0 0 var(--panel-gap); }
+  #leadsPage .detail { overflow: hidden; }
+  #leadsPage .detail-body { min-height: 0; overflow: auto; }
+  #leadsPage .info-pair,
+  #leadsPage .section-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #leadsPage .panel-head { padding-inline: .875rem; }
+  #commsTabs { gap: 0; }
+  #commsTabs .tab-btn { padding-inline: 8px; font-size: max(.75rem, .75rem * var(--crm-font-scale, 1)); }
+
+  .db-page { overflow: hidden; padding: 0; }
+  .db-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .db-sections {
+    display: grid;
+    flex-direction: initial;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: stretch;
+    align-content: normal;
+    overflow: hidden;
+  }
+  .db-section[data-tone="team"] { grid-column: 1 / -1; flex: initial; max-height: 38%; }
+  .db-grid { overflow: auto; }
+
+  .sc-page { padding: 0; overflow-x: hidden; overflow-y: auto; }
+  .sc-settings { display: flex; grid-template-columns: none; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+  .sc-set { min-width: 0; align-items: center; flex-direction: row; gap: .5rem; }
+  .sc-set input { width: 3.5rem; }
+  .sc-set .sc-money-in { width: 6.5rem; }
+  .sc-history { grid-column: auto; }
+  .sc-strip { flex-wrap: nowrap; }
+  .sc-strip-name { max-width: 20rem; }
+  .sc-ctrls { gap: .375rem; }
+  .sc-grid-wrap { max-width: none; overflow: auto; }
+
+  .cp-page { overflow: hidden; padding: 0; }
+  .cp-board { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .cp-channel { min-height: 0; padding: 8px; }
+  .cp-top { flex-wrap: nowrap; gap: 8px; padding: 8px 12px; }
+  .cp-name { flex: 0 1 15rem; min-width: 7.5rem; }
+  .cp-steps { order: 0; flex-basis: auto; overflow: visible; padding-top: 2px; }
+  .cp-sum { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  #logPage.workspace { flex-direction: row; gap: var(--panel-gap); overflow: hidden; }
+  #logPage .al-team { flex: 3 1 0; width: auto; min-width: 22rem; min-height: 0; }
+  #logPage .al-time { flex: 2 1 0; width: auto; min-width: 18rem; min-height: 0; }
+  #logPage .al-team .al-scroll { overflow: hidden; }
+  #logPage .panel-head { gap: .5rem; }
+  #logPage .al-strip { flex-wrap: nowrap; padding: 8px; }
+  #logPage .al-metrics { width: auto; margin-left: auto; padding-left: 0; justify-content: initial; }
+  #logPage .al-day-row { grid-template-columns: 6.875rem 1fr 1fr 1.3fr; gap: .5rem; font-size: .75rem; }
+  .al-search { width: 9.375rem; }
+}
+
+/* Shared dark-neutral text; retain semantic state colors, metadata tones, and Email's local palette. */
+#leadsPage .lead-name,
+#leadsPage .lead-company,
+#leadsPage .lead-revenue,
+#leadsPage .lead-contact,
+#leadsPage .detail-body .section-title,
+#leadsPage .detail-body .lead-value,
+#leadsPage .detail-body .fact-val:not(.none),
+#leadsPage .detail-body .copy-val,
+#leadsPage .detail-body .contact-value,
+#leadsPage .detail-body .stmt td:not(.as-of),
+#leadsPage .detail-body .summary,
+#leadsPage .detail-body .feed-text,
+#commsBody .ios-name:not(.missed),
+#commsBody .wa-name,
+#commsBody .ios-preview,
+#commsBody .wa-preview,
+#commsBody .contact-name {
+  color: #4A5261;
+}
+#dashPage .db-stat:not(.warn) .db-stat-val,
+#dashPage .db-section-title,
+#dashPage .db-card-head h3,
+#dashPage .db-row-company,
+#dashPage .db-row-meta,
+#dashPage .db-table th,
+#dashPage .db-table td:not(:has(.db-team-status[data-state])),
+#dashPage .db-team-status:not([data-state]) {
+  color: #4A5261;
+}
+#scanPage .sc-stats,
+#scanPage .sc-stats b:not(.sc-failed),
+#scanPage .sc-results .panel-title,
+#scanPage .sc-hit-title {
+  color: #4A5261;
+}
+.cp-page .cp-channel h2,
+.cp-page .cp-field h3,
+.cp-page .cp-title {
+  color: #4A5261;
+}
+#logPage .al-strip-who b,
+#logPage .al-metrics b,
+#logPage .al-day,
+#logPage .al-day-name {
+  color: #4A5261;
+}
+
+/* Original compact red counters stay in the Communications tabs and top-bar bell only. */
+#commsTabs .tab-badge,
+#commsTabs .tab-btn.active .tab-badge {
+  position: absolute;
+  top: 0;
+  right: .125rem;
+  min-width: .9375rem;
+  width: auto;
+  height: .9375rem;
+  padding: 0 .25rem;
+  border-radius: .25rem;
+  background: #FF3B30;
+  color: #FFFFFF;
+  font-size: calc(.5625rem * var(--crm-font-scale, 1));
+  font-style: normal;
+  font-weight: 700;
+  line-height: .9375rem;
+  text-align: center;
+}
+.notif-badge {
+  position: absolute;
+  top: -.125rem;
+  right: -.1875rem;
+  min-width: .9375rem;
+  height: .9375rem;
+  padding: 0 .25rem;
+  border-radius: .25rem;
+  background: var(--accent-red);
+  color: #FFFFFF;
+  font-size: calc(.5625rem * var(--crm-font-scale, 1));
+  font-weight: 700;
+  line-height: .9375rem;
+  text-align: center;
+}
+
+/* Original unread-row treatment: a small blue dot, with no count badge, blue rail, or tinted row. */
+#commsBody .ios-row.unread,
+#commsBody .wa-row.unread { background: transparent; box-shadow: none; }
+#commsBody .ios-row.unread::before,
+#commsBody .wa-row.unread::before {
+  content: "";
+  position: absolute;
+  left: .3125rem;
+  top: 50%;
+  width: .5625rem;
+  height: .5625rem;
+  margin-top: -.28125rem;
+  border-radius: 50%;
+  background: #007AFF;
+}
+#commsBody .wa-row { position: relative; }
+#commsBody .ios-row.unread .ios-name,
+#commsBody .wa-row.unread .wa-name { color: #4A5261; font-weight: 600; }
+#commsBody .unread-badge,
+#commsBody .wa-badge { display: none !important; }
+
+/* Dialer number uses the source Inter font, green LCD ink, and enough width for the formatted 10 digits. */
+#dialer .dialer-input {
+  width: 15ch;
+  min-width: 15ch;
+  flex: 0 0 auto;
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+  color: #35C94A;
+  -webkit-text-fill-color: #35C94A;
+}
+#leadsPage .act-btn {
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+}
+#leadsPage .act-btn.call { background: #35C94A; }
+.phone-ctl-icon .dot { background: #35C94A; }
+
+/* Middle-panel card headings are smaller; the very light gray block is compact rather than full-width. */
+#leadsPage .detail-body .section-card > .section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  margin: 0 0 6px;
+  padding: 3px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: #F7F8FC;
+  color: #4A5261;
+  font-size: max(.625rem, calc(.6875rem * var(--crm-font-scale, 1) - .03125rem));
+  line-height: 1.25;
+}
+#leadsPage .detail-body .section-card > .section-title .section-title-icon {
+  width: .75rem;
+  height: .75rem;
+}
+
+
+/* The three-panel Company Info column follows the workspace's consistent 8px spacing. */
+
+/* Remove the decorative green top rule from the Dashboard's bottom team card. */
+#dashPage .db-section[data-tone="team"] { border-top: 0; }
+
+/* Dialer: restore the original source-file field sizing and typography. */
+#dialer .dialer-input {
+  width: 14ch;
+  min-width: 14ch;
+  max-width: initial;
+  flex: 0 0 auto;
+  height: 1.625rem;
+  padding: 0 6px;
+  border: 1px solid #C97B2A;
+  border-radius: 8px;
+  background: #07130B;
+  color: #35C94A;
+  -webkit-text-fill-color: #35C94A;
+  font-family: var(--font);
+  font-size: calc(.75rem * var(--crm-font-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0;
+}
+#dialer .dialer-input:focus {
+  border-color: rgba(53,201,74,.7);
+  background: #0B1B10;
+  color: #35C94A;
+  -webkit-text-fill-color: #35C94A;
+}
+#dialer .dialer-input:disabled,
+#dialer .dialer-input[readonly] {
+  color: #35C94A;
+  opacity: 1;
+  -webkit-text-fill-color: #35C94A;
+}
+@media (max-width: 42rem) {
+  #dialer .dialer-input { width: 14ch; min-width: 14ch; max-width: none; }
+}
+
+
+/* One 8px gutter between the sidebar, panels, middle header, and cards. */
+#leadsPage.workspace { gap: 0; }
+#leadsPage .resizer { width: 8px; flex: 0 0 8px; margin: 0; }
+#leadsPage .detail { gap: 8px; }
+#leadsPage .detail-head { margin: 0; }
+#leadsPage .detail-body,
+#leadsPage .info-pair,
+#leadsPage .section-pair { gap: 8px; }
+
+
+/* Keep narrow-screen navigation accessible while making the desktop workspace easier to reach. */
+/* The existing frozen Company column stays in place; make the Results scrollbar easier to find and focus. */
+#scanResultsWrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: auto;
+  scrollbar-color: #AAB4C4 #F1F3F7;
+}
+#scanResultsWrap:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: -2px; }
+#scanResultsWrap::-webkit-scrollbar { width: 10px; height: 10px; }
+#scanResultsWrap::-webkit-scrollbar-track { background: #F1F3F7; }
+#scanResultsWrap::-webkit-scrollbar-thumb { background: #AAB4C4; border: 2px solid #F1F3F7; border-radius: 6px; }
+
+/* Empty Team views show a concise state instead of an uninformative header-only table. */
+#dashPage .db-team-empty {
+  margin: 0;
+  padding: .25rem 0;
+  color: var(--text-muted);
+  font-size: calc(.75rem * var(--crm-font-scale, 1));
+}
+
+/* The two Campaign channels remain equal-width/equal-height, with their shared row sized to its content. */
+#campPage .cp-board { align-items: stretch; }
+#campPage .cp-channel { align-self: stretch; }
+
+/* ── Unified 8px rhythm and final visual pass ───────────────────────────── */
+:root {
+  --content-gap: var(--panel-gap);
+  --surface-radius: 12px;
+}
+
+/* Every page starts at the same content edge and uses the same visible gutter. */
+.body-area > :not(.sidebar),
+.workspace,
+.mail-page,
+.db-page,
+.sc-page,
+.cp-page { margin: 0; }
+.db-page,
+.sc-page,
+.cp-page { padding: 0; gap: var(--content-gap); }
+.db-stats,
+.db-sections,
+.sc-workspace,
+.sc-intake,
+.sc-output,
+.cp-board,
+.cp-audience,
+.cp-run,
+.gm-body,
+.al-overview { gap: var(--content-gap); }
+#leadsPage.workspace { gap: 0; }
+#leadsPage .resizer { flex-basis: var(--content-gap); width: var(--content-gap); }
+
+/* Page headings are navigation chrome, not content. */
+#dashPage .db-head { min-height: 0; height: 0; overflow: hidden; padding: 0; }
+#dashPage .db-hello { display: none; }
+#dashPage .db-date { display: none; }
+
+/* Middle panel: light identity header and aligned information cards. */
+#leadsPage .detail-head {
+  min-height: 64px; padding: var(--panel-pad); border: 1px solid var(--border-strong);
+  border-radius: var(--surface-radius); background: var(--bg-surface); color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+#leadsPage .detail-name { color: var(--text-primary); font-size: .9375rem; font-weight: 650; }
+#leadsPage .detail-sub,
+#leadsPage .detail-addr { color: var(--text-secondary); }
+#leadsPage .detail-addr .ic,
+#leadsPage .detail-time { color: var(--text-muted); }
+#leadsPage .detail-body { gap: var(--content-gap); }
+#leadsPage .info-pair,
+#leadsPage .section-pair { gap: var(--content-gap); }
+#leadsPage .section-card {
+  padding: var(--panel-pad); border: 1px solid var(--border-strong);
+  border-radius: var(--surface-radius); background: var(--bg-surface); box-shadow: var(--shadow-sm);
+}
+#leadsPage .detail-body .section-card > .section-title {
+  width: 100%; margin-bottom: var(--content-gap); padding: 0 0 var(--content-gap);
+  border-bottom: 1px solid var(--line); border-radius: 0; background: transparent;
+  color: var(--text-secondary); font-size: .6875rem; letter-spacing: .04em;
+}
+#leadsPage .detail-body .facts,
+#leadsPage .detail-body .contact-facts { gap: var(--content-gap); }
+
+/* The dialer is a narrow premium command surface, not a second sidebar. */
+#dialer.dialer {
+  width: min(332px, calc(100vw - 16px)); max-width: min(332px, calc(100vw - 16px));
+  padding: var(--content-gap); border: 1px solid #3C4661; border-radius: 14px;
+  background: linear-gradient(145deg, #202840, #171D30); box-shadow: 0 16px 40px rgba(12,18,35,.28);
+}
+#dialer .dialer-main { grid-template-columns: 34px minmax(0, 1fr) auto auto 26px; gap: var(--content-gap); }
+#dialer .dialer-avatar { width: 34px; height: 34px; }
+#dialer .dialer-name { font-size: .8125rem; }
+#dialer .dialer-status { font-size: .65625rem; }
+#dialer .dialer-min { width: 26px; height: 26px; }
+#dialer .dial-keypad { width: 34px; height: 34px; }
+#dialer .dialer-input { height: 34px; font-size: .71875rem; }
+#dialer .dial-circle { width: 34px; height: 34px; }
+#dialer .dial-action-label { font-size: .5625rem; }
+#dialer .dial-ctrls { gap: var(--content-gap); padding-top: var(--content-gap); }
+#dialer .dial-ctrl { min-height: 46px; }
+#dialer .dial-icon { width: 26px; height: 26px; }
+#dialer .keypad { grid-template-columns: repeat(3, 2.75rem); gap: var(--content-gap); padding: var(--content-gap); }
+#dialer .key-btn { height: 2.5rem; }
+
+@media (max-width: 64rem) {
+  .app { padding: var(--content-gap); gap: var(--content-gap); }
+  .body-area { gap: var(--content-gap); }
+  #leadsPage.workspace { gap: var(--content-gap); }
+  #leadsPage .resizer { flex-basis: 0; width: 0; }
+}
