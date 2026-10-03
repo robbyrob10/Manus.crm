@@ -187,9 +187,9 @@
 #dialer .dialer-timer { font-size: 10px; }
 #dialer .dial-keypad { width: 32px; height: 32px; flex: 0 0 32px; }
 #dialer .dialer-input {
-  width: 142px !important;
-  min-width: 142px;
-  max-width: 142px;
+  width: 168px !important;
+  min-width: 168px;
+  max-width: 168px;
   height: 32px;
   padding: 0 8px;
   border: 0;
