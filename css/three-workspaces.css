@@ -10,8 +10,8 @@
 }
 
 @font-face {
-  font-family: "DSEG7 Classic";
-  src: url("../assets/dseg7-classic-latin-400-normal.woff2") format("woff2");
+  font-family: "DSEG7 Modern";
+  src: url("../assets/dseg7-modern-latin-400-normal.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -205,10 +205,11 @@
   background: #020803;
   color: #7BE37A;
   -webkit-text-fill-color: #7BE37A;
-  font-family: "DSEG7 Classic", monospace;
-  font-size: 16px;
+  font-family: "DSEG7 Modern", monospace;
+  font-size: 15px;
   font-weight: 400;
-  letter-spacing: -.12em;
+  letter-spacing: -.10em;
+  word-spacing: .14em;
   font-synthesis: none;
   line-height: 1;
   text-shadow: 0 0 3px rgba(123,227,122,.72), 0 0 7px rgba(123,227,122,.24);
