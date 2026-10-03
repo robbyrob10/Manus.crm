@@ -197,7 +197,11 @@
 #dialer .dial-action { flex: 0 0 38px; min-width: 38px; gap: 1px; }
 #dialer .dial-circle { width: 32px; height: 32px; }
 #dialer .dial-action-label { font-size: 8px; line-height: 1; }
+#dialer #callVisibleLabel { display: none; }
+#dialer .dial-action:not(#declineAction) { align-items: center; justify-content: center; }
 #dialer .dialer-min { width: 24px; height: 24px; flex: 0 0 24px; }
+#dialer .dialer-min { border: 0; border-radius: 50%; background: transparent; color: #8D97AA; box-shadow: none; }
+#dialer .dialer-min:hover { background: transparent; color: #B8C0CF; }
 #dialer .dial-fold { margin-top: 2px; }
 
 /* Topbar phone control: compact premium status pill after removing the work-scope switch. */
@@ -283,10 +287,10 @@
   display: flex; flex-direction: column; gap: var(--panel-gap);
   flex: 1 1 auto; min-height: 0; min-width: 0;
 }
-#scanPage .sc-intake { display: grid; grid-template-columns: 1fr; grid-template-areas: "source" "sample"; gap: var(--panel-gap); min-width: 0; overflow: visible; }
+#scanPage .sc-intake { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "source settings" "sample sample"; gap: var(--panel-gap); min-width: 0; overflow: visible; }
 #scanPage .sc-output { display: flex; flex-direction: column; gap: var(--panel-gap); min-width: 0; min-height: 0; width: 100%; flex: 1 1 auto; }
 #scanPage .sc-source { grid-area: source; }
-#scanPage .sc-settings { display: none; }
+#scanPage .sc-settings { grid-area: settings; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: center; gap: 8px; min-width: 0; padding: 12px; border: 1px solid #DDE3EC; border-radius: 12px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(25,35,58,.025); }
 #scanPage .sc-sample { grid-area: sample; }
 #scanPage .sc-source, #scanPage .sc-settings, #scanPage .sc-sample, #scanPage .sc-results {
   border: 1px solid var(--work-line); border-radius: 14px; background: #FFFFFF; box-shadow: 0 4px 14px rgba(25,35,58,.04);
@@ -327,6 +331,17 @@
 #scanPage .sc-sample-docs { display: flex; flex-wrap: wrap; gap: 5px; }
 #scanPage .sc-sample-docs span { padding: 4px 6px; border: 1px solid #E5EAF1; border-radius: 5px; background: #F7F8FB; color: #718094; font-size: 9px; }
 #scanPage .sc-sample p { margin: auto 0 0; color: #8792A1; font-size: 10px; line-height: 1.4; }
+#leadsPage .financial-pitch-card { background: #EAF0FF; }
+#leadsPage .info-pair > .section-card,
+#leadsPage .section-pair > .section-card { height: 100%; min-height: 0; align-self: stretch; }
+#dashPage .db-sections,
+#campPage .cp-board,
+#logPage .al-overview,
+#logPage .al-days { align-items: stretch; }
+#dashPage .db-sections > *,
+#campPage .cp-board > *,
+#logPage .al-overview > *,
+#logPage .al-days > * { align-self: stretch; }
 #scanPage .sc-output { overflow: hidden; }
 #scanPage .sc-progress { padding: 9px 12px; border: 1px solid #DFE5EF; border-radius: 10px; background: #FFFFFF; }
 #scanPage .sc-results { flex: 1 1 auto; min-height: 26rem; overflow: hidden; }
@@ -337,7 +352,7 @@
 #scanPage .sg th { height: 38px; background: #F5F7FA; color: #697587; font-size: 10px; font-weight: 650; }
 
 @media (max-width: 64rem) {
-  #scanPage .sc-intake { grid-template-columns: 1fr; grid-template-areas: "source" "settings" "sample"; }
+  #scanPage .sc-intake { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "source settings" "sample sample"; }
 }
 #scanPage .sg td { height: 38px; color: #4A5261; font-size: 11px; }
 #scanPage .sg .sc-grid-empty td { height: 112px; padding: 18px; background: #FBFCFE; color: #7A8697; font-size: 12px; text-align: center; white-space: normal; }
