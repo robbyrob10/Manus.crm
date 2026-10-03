@@ -237,8 +237,8 @@
 
 /* Communications tab strip: keep the All/Messages/Calls/Email row compact. */
 #leadsPage .panel-comms > .comms-head {
-  height: 36px;
-  min-height: 36px;
+  height: 46px;
+  min-height: 46px;
   padding: 0 8px;
 }
 #leadsPage .comms-head .comms-tabs {
@@ -257,16 +257,21 @@
   height: 24px;
 }
 #leadsPage .panel-comms .ios-nav {
-  height: 24px;
-  min-height: 24px;
+  height: 28px;
+  min-height: 28px;
   padding: 0 8px;
   gap: 3px;
 }
-#leadsPage .panel-comms .ios-nav.wa { height: 26px; min-height: 26px; }
+#leadsPage .panel-comms .ios-nav.wa { height: 30px; min-height: 30px; }
 #leadsPage .panel-comms .ios-title,
 #leadsPage .panel-comms .ios-back { font-size: 11px; }
 #leadsPage .panel-comms .ios-tools { gap: 2px; }
 #leadsPage .panel-comms .ios-icon { width: 22px; height: 22px; }
+
+/* Keep the center record surface flush to its 8px resizer gutters. */
+#leadsPage .panel-detail,
+#leadsPage .detail,
+#leadsPage .detail-body { padding-inline: 0; margin-inline: 0; }
 
 /* Scanner: intake and current output side by side; live Results always stay real and visible. */
 #scanPage.sc-page {
